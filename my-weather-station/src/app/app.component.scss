@@ -1,0 +1,49 @@
+@import 'src/styles/colors.scss';
+
+$bar-height: 60px;
+$border: 1px solid rgba(0, 0, 0, 0.09);
+
+#appContainer {
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  align-content: stretch;
+
+  width: 100vw;
+  height: 100vh;
+}
+app-loading-overlay {
+  z-index: 50;
+}
+#menuBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  flex: 0 1 auto;
+  z-index: 100;
+  height: $bar-height;
+  background-color: #ffffff17;
+  border-bottom: $border;
+}
+#content {
+  display: flex;
+  flex-flow: column;
+  height: calc(100% - #{$bar-height});
+  margin-top: $bar-height;
+  overflow-y: auto;
+  .mainContainer {
+    flex: auto;
+    width: 100%;
+  }
+  #appFooter {
+    height: $bar-height;
+    border-top: $border;
+  }
+}
+.opacity {
+  opacity: 0.5;
+}

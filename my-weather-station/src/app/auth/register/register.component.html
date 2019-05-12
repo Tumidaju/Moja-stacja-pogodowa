@@ -1,0 +1,102 @@
+<div id="container">
+  <p-progressBar mode="indeterminate" *ngIf="loading === true"></p-progressBar>
+  <form #reg="ngForm" [formGroup]="regForm">
+    <div id="header">
+      <span id="signup"> Zarejestruj się</span>
+    </div>
+    <div id="register-container">
+      <div id="form-container">
+        <div id="regErr">
+          <mat-error *ngIf="registrationError">{{
+            registrationErrorMessage
+          }}</mat-error>
+        </div>
+        <div class="group full">
+          <mat-form-field>
+            <input
+              matInput
+              autocomplete="given-name"
+              placeholder="Name"
+              type="text"
+              id="name"
+              formControlName="name"
+              (focus)="onFocus(name)"
+              (blur)="onBlur(name)"
+              autofocus
+            />
+            <mat-error *ngIf="inputError(name)">{{ nameErrorStr }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="group full">
+          <mat-form-field>
+            <input
+              matInput
+              autocomplete="email"
+              placeholder="E-mail"
+              type="text"
+              id="email"
+              formControlName="email"
+              (focus)="onFocus(email)"
+              (blur)="onBlur(email)"
+            />
+            <mat-error *ngIf="inputError(email)">{{ emailErrorStr }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="group half">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Password"
+              type="password"
+              id="password"
+              formControlName="password"
+              (focus)="onFocus(password)"
+              (blur)="onBlur(password)"
+              (keydown)="clearPasswordConfirm()"
+            />
+            <mat-error *ngIf="inputError(password)">{{
+              passwordErrorStr
+            }}</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="group half">
+          <mat-form-field>
+            <input
+              matInput
+              placeholder="Confirm password"
+              type="password"
+              id="passwordConfirm"
+              formControlName="passwordConfirm"
+              (focus)="onFocus(passwordConfirm)"
+              (blur)="onBlur(passwordConfirm)"
+            />
+            <mat-error
+              *ngIf="passwordNoMatch(reg) || inputError(passwordConfirm)"
+              >{{ passwordConfirmErrorStr }}</mat-error
+            >
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="btnBox">
+        <button
+          type="button"
+          class="white"
+          mat-raised-button
+          color="primary"
+          (click)="onSubmit(reg)"
+        >
+          Rejestracja
+        </button>
+      </div>
+      <div
+        class="additionalLink"
+        [routerLink]="['/auth/login']"
+        routerLinkActive="active"
+      >
+        Posiadasz już konto?
+      </div>
+    </div>
+  </form>
+</div>
+<!-- </div>
+</div> -->

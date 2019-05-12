@@ -1,0 +1,35 @@
+<div id="appContainer">
+  <div id="menuBar">
+    <app-bar
+      [isLogged]="isLogged$ | async"
+      [accountRole]="accountRole$ | async"
+      [logoIMG]="logoIMG"
+      [profileIMG]="profileIMG"
+      [showCreatorButton]="showCreatorButton$ | async"
+      [showAdmin]="showAdminMenu$ | async"
+      [buttonText]="buttonText"
+      [showUserInfo]="showUserInfo$ | async"
+      [profileName]="profileData$ | async"
+      [isLoading]="isSurveySending$ | async"
+      (redirectToButton)="redirectTo($event)"
+      (progressButton)="sendSurvey()"
+      (logout)="logout()"
+      (routeSwitch)="routeSwitch($event)"
+    >
+    </app-bar>
+  </div>
+  <div id="content">
+    <div
+      [ngClass]="
+        loadingOverlay? 'mainContainer opacity' : 'mainContainer'
+      "
+    >
+      <router-outlet></router-outlet>
+      <app-loading-screen *ngIf="loading"></app-loading-screen>
+    </div>
+    <app-loading-overlay *ngIf="loadingOverlay"></app-loading-overlay>
+    <div id="appFooter">
+      <app-footer></app-footer>
+    </div>
+  </div>
+</div>
