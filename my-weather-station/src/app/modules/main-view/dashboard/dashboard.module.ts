@@ -1,3 +1,4 @@
+import { SmallWeatherWidgetModule } from './small-weather-widget/small-weather-widget.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatSidenavModule } from '@angular/material';
@@ -8,7 +9,8 @@ import { DashboardRoutingModule } from './dashboard.routing';
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    MatSidenavModule
+    MatSidenavModule,
+    SmallWeatherWidgetModule
   ],
   declarations: [DashboardComponent],
   exports: [DashboardComponent]
