@@ -1,0 +1,57 @@
+<div id="container">
+  <mat-tab-group [backgroundColor]="accent">
+    <!-- headerPosition="below"  -->
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
+        <div class="label">
+          <!-- <img src="./../../../../../assets/sun.png" alt="" /> -->
+          <div id="label-temp" class="inf">{{ '19' | celsiusSign }}</div>
+          <div id="label-day" class="inf">Pon</div>
+        </div>
+      </ng-template>
+      <ng-template matTabContent>
+        <div id="detail-container">
+          <div id="place-info">
+            <div id="location">
+              30-085 Kraków
+            </div>
+            <div id="day">poniedziałek</div>
+            <div id="weather-type">Przejściowe opady</div>
+          </div>
+          <div id="weather-info">
+            <div id="temp-value">
+              <div id="weather-img-container">
+                <img
+                  src="./../../../../../assets/iconfinder_Partly_Cloudy_3741357.png"
+                  alt=""
+                />
+              </div>
+              <div id="temp-container">{{ '11' | celsiusSign }}</div>
+            </div>
+            <div id="temp-details">
+              <div>szansa opadów: 30%</div>
+              <div>wilgotność: 73%</div>
+              <div>wiatr: 18 km/h</div>
+            </div>
+          </div>
+          <div>
+            <div id="chart" class="wrapper col-2">
+              <canvas id="chart-2" #chart></canvas>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <!-- <mat-icon class="example-tab-icon">thumb_up</mat-icon> -->
+        <div class="label">
+          <!-- <img src="./../../../../../assets/sun.png" alt="" /> -->
+          <span>Pon</span>
+        </div>
+      </ng-template>
+      Tab Two Contents
+    </mat-tab>
+  </mat-tab-group>
+</div>
