@@ -92,7 +92,7 @@ export class PasswordChangeComponent implements OnInit, OnDestroy {
       this.loading = true;
       this.accountService
         // login with credentials from form
-        .changePassword(this.oldPassword.value, this.newPassword.value)
+        .changePassword(this.passwordForm.getRawValue())
         .subscribe(
           data => {
             this.accountService.isLoggedNext(false);

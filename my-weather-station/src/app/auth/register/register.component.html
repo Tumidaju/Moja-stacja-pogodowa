@@ -66,12 +66,12 @@
               placeholder="Confirm password"
               type="password"
               id="passwordConfirm"
-              formControlName="passwordConfirm"
-              (focus)="onFocus(passwordConfirm)"
-              (blur)="onBlur(passwordConfirm)"
+              formControlName="confirmPassword"
+              (focus)="onFocus(confirmPassword)"
+              (blur)="onBlur(confirmPassword)"
             />
             <mat-error
-              *ngIf="passwordNoMatch(reg) || inputError(passwordConfirm)"
+              *ngIf="passwordNoMatch(reg) || inputError(confirmPassword)"
               >{{ passwordConfirmErrorStr }}</mat-error
             >
           </mat-form-field>

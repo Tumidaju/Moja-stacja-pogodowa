@@ -11,6 +11,7 @@ import { SharedService } from '../../services/shared.service';
 import { UserProfile } from '../other/user.model';
 import { AccountService } from '../services/account.service';
 import { AuthenticationService } from '../services/authentication.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -79,10 +80,23 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.password.markAsTouched();
     } else {
       this.loading = true;
-
-      this.accountService.isLoggedNext(true);
-      this.router.navigateByUrl('/app/d');
-      this.loading = false;
+      this.authenticationService
+        .login(this.email.value, this.password.value)
+        .pipe(first())
+        .subscribe(
+          data => {
+            this.router.navigateByUrl('/app/d');
+            this.loading = false;
+          },
+          error => {
+            // set error message from api to loginErrorMessage
+            this.loginError = true;
+            this.loginErrorMessage = this.accountService.setLoginErrorString(
+              error.error_description
+            );
+            this.loading = false;
+          }
+        );
     }
   }
 

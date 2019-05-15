@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { SharedService } from '../../services/shared.service';
 import { AccountService } from '../services/account.service';
 import { AuthenticationService } from '../services/authentication.service';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +27,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   name: AbstractControl;
   email: AbstractControl;
   password: AbstractControl;
-  passwordConfirm: AbstractControl;
+  confirmPassword: AbstractControl;
 
   // error handlers
   nameErrorStr: string;
@@ -66,24 +67,24 @@ export class RegisterComponent implements OnInit, OnDestroy {
         '',
         Validators.compose([
           Validators.required,
-          Validators.pattern(this.namePattern)
+          // Validators.pattern(this.namePattern)
         ])
       ],
       email: [
         '',
         Validators.compose([
           Validators.required,
-          Validators.pattern(this.emailPattern)
+          // Validators.pattern(this.emailPattern)
         ])
       ],
       password: [
         '',
         Validators.compose([
           Validators.required,
-          Validators.pattern(this.passwordPattern)
+          // Validators.pattern(this.passwordPattern)
         ])
       ],
-      passwordConfirm: [
+      confirmPassword: [
         '',
         Validators.compose([Validators.required, this.matchPassword])
       ]
@@ -93,7 +94,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.name = this.regForm.controls.name;
     this.email = this.regForm.controls.email;
     this.password = this.regForm.controls.password;
-    this.passwordConfirm = this.regForm.controls.passwordConfirm;
+    this.confirmPassword = this.regForm.controls.confirmPassword;
   }
 
   onSubmit(form: NgForm): void {
@@ -101,7 +102,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
       // showing possible errors
       this.setAllAsTouched();
     } else {
-      // this.loading = true;
+      this.loading = true;
+      this.accountService
+        .register(this.regForm.getRawValue())
+        .pipe(first())
+        .subscribe((res: any) => {
+          this.router.navigateByUrl('/auth/login');
+        });
       // this.createUser();
       // create new user
       // switch (this.profileName.value) {
@@ -127,13 +134,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.name.markAsTouched();
     this.email.markAsTouched();
     this.password.markAsTouched();
-    this.passwordConfirm.markAsTouched();
+    this.confirmPassword.markAsTouched();
   }
   setAllAsUntouched(): void {
     this.name.markAsUntouched();
     this.email.markAsUntouched();
     this.password.markAsUntouched();
-    this.passwordConfirm.markAsUntouched();
+    this.confirmPassword.markAsUntouched();
   }
 
   onFocus(control: AbstractControl): void {
@@ -151,15 +158,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   clearPasswordConfirm(): void {
     // clear confirm password input after changing password input
-    this.passwordConfirm.setValue('');
-    this.passwordConfirm.markAsUntouched();
+    this.confirmPassword.setValue('');
+    this.confirmPassword.markAsUntouched();
   }
 
   matchPassword(control: AbstractControl): { [s: string]: boolean } {
     // check if inputs have same values
     if (control.parent !== undefined) {
       const password = control.parent.get('password').value;
-      const passwordConfirm = control.parent.get('passwordConfirm').value;
+      const passwordConfirm = control.parent.get('confirmPassword').value;
       if (password !== passwordConfirm) {
         return { noMatch: true };
       }
@@ -188,8 +195,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   passwordNoMatch(): boolean {
-    if (this.passwordConfirm.errors) {
-      if (this.passwordConfirm.errors.noMatch === undefined) {
+    if (this.confirmPassword.errors) {
+      if (this.confirmPassword.errors.noMatch === undefined) {
         this.passwordConfirmErrorStr = 'Passwords do not match';
         return true;
       }

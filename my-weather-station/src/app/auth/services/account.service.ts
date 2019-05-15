@@ -21,13 +21,15 @@ export class AccountService {
   setRoleSubject(x) {
     this.role.next(x);
   }
-
+  register(data: any) {
+    return this.http.post(this.config.apiUrl + 'api/Account/Register', data);
+  }
   setProfileData() {
     const user = JSON.parse(localStorage.getItem('currentUser')) || {};
+    // tslint:disable-next-line: variable-name
     const _profileData = {
-      firstName: user.name || 'name',
-      lastName: user.surname || 'surname',
-      email: user.email || 'email@sth.pl',
+      firstName: user.userName || 'name',
+      email: user.userName || 'email@sth.pl',
       phoneNum: user.phoneNumber || 'qwe'
     };
     this.profileData.next(_profileData);
@@ -35,11 +37,11 @@ export class AccountService {
   // create new user
 
   // change password
-  changePassword(OldPassword, NewPassword) {
-    return this.http.post(this.config.apiUrl + '/auth/changePassword', {
-      OldPassword,
-      NewPassword
-    });
+  changePassword(data: any) {
+    return this.http.post(
+      this.config.apiUrl + 'api/Account/ChangePassword',
+      data
+    );
   }
 
   // restore password
@@ -60,7 +62,7 @@ export class AccountService {
   }
 
   // recovery password
-  passMailData(mail) {
+  passMailData(mail: string) {
     this.mail = mail;
   }
   getMailData() {

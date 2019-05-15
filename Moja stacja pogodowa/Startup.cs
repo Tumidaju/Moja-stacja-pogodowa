@@ -12,6 +12,7 @@ namespace Moja_stacja_pogodowa
     {
         public void Configuration(IAppBuilder app)
         {
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             ConfigureAuth(app);
         }
     }

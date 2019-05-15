@@ -21,6 +21,7 @@ export class MainSettingsComponent implements OnInit {
   created = false;
   loading = false;
   loader = true;
+// tslint:disable-next-line: variable-name
   private _userInfo: UserProfile;
   @Input()
   set userInfo(userInfo) {
@@ -38,7 +39,7 @@ export class MainSettingsComponent implements OnInit {
   name: AbstractControl;
   email: AbstractControl;
   password: AbstractControl;
-  passwordConfirm: AbstractControl;
+  confirmPassword: AbstractControl;
 
   // error handlers
   nameErrorStr: string;
@@ -97,7 +98,7 @@ export class MainSettingsComponent implements OnInit {
     this.name = this.regForm.controls.name;
     this.email = this.regForm.controls.email;
     this.password = this.regForm.controls.password;
-    this.passwordConfirm = this.regForm.controls.passwordConfirm;
+    this.confirmPassword = this.regForm.controls.confirmPassword;
     this.created = true;
   }
   setValue() {
@@ -127,6 +128,7 @@ export class MainSettingsComponent implements OnInit {
     this.accountService.setProfileData();
   }
   createUser() {
+// tslint:disable-next-line: variable-name
     const _user: UserProfile = {
       firstName: this.name.value,
       email: this.email.value

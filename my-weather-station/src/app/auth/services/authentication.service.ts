@@ -1,4 +1,4 @@
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
@@ -8,26 +8,35 @@ import { AccountService } from './account.service';
 
 @Injectable()
 export class AuthenticationService {
-  profileData: BehaviorSubject<User> = new BehaviorSubject<
-  User
->(undefined);
+  profileData: BehaviorSubject<User> = new BehaviorSubject<User>(undefined);
   constructor(
     private http: HttpClient,
     private config: AppConfig,
     private userService: AccountService
-  ) { }
+  ) {}
 
-  login(Email: string, Password: string) {
+  login(username: string, password: string) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded'
+    });
+    const body = `grant_type=${'password'}&username=${username}&password=${password}`;
+    // const body = new URLSearchParams();
+    // body.set('grant_type', 'password');
+    // body.set('username', username);
+    // body.set('password', password);
+    // const headers = new HttpHeaders({
+    //   'Content-Type': 'application/x-www-form-urlencoded'
+    // });
     return this.http
-      .post<any>(this.config.apiUrl + '/auth/login', { Email, Password })
-      .map(user => {
+      .post<any>(this.config.apiUrl + 'Token', body, { headers })
+      .map(data => {
         // login successful if there's a jwt token in the response
-        if (user && user.loginData.token) {
+        if (data && data.access_token) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-          localStorage.setItem('currentUser', JSON.stringify(user));
+          localStorage.setItem('currentUser', JSON.stringify(data));
           this.userService.isLoggedNext(true);
         }
-        return user;
+        return data;
       });
   }
 
