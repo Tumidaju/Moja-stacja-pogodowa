@@ -1,0 +1,65 @@
+@import 'src/styles/colors.scss';
+#container {
+  .label {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .inf {
+      font-weight: 600;
+    }
+  }
+  .label:after {
+    content: '';
+    background-image: url('./../../../../../assets/sun.png');
+    // box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
+    // box-shadow: inset 0 0 0 1000px rgba(104, 183, 138, 0.4);
+    box-shadow: inset 0 0 0 1000px rgba(119, 130, 135, 0.4);
+    // background-color: $primary;
+    opacity: 0.5;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  #detail-container {
+    color: #878787;
+    padding: 15px 30px;
+    #place-info {
+      #location {
+        font-size: x-large;
+      }
+      #day {
+        font-size: medium;
+      }
+      #weather-type {
+        font-size: medium;
+      }
+    }
+    #weather-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      #temp-value {
+        display: flex;
+        align-items: center;
+        #temp-container {
+          font-size: 70px;
+          color: black;
+        }
+      }
+      #temp-details {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}
+::ng-deep .mat-tab-label-content {
+  height: 100%;
+  width: 100%;
+}

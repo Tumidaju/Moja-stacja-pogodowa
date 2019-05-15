@@ -1,0 +1,47 @@
+<div id="container">
+  <div id="small-weather-widget-container">
+    <div class="content" id="first-content">
+      <div id="img-container">
+        <img src="./../../../../../assets/sun.png" alt="" />
+      </div>
+      <div id="info-container">
+        <div id="temp" class="infos">{{ weather.temp | celsiusSign }}</div>
+        <div id="info" class="infos">
+          <div id="weather-type">{{ weather.weatherType }}</div>
+          <div id="position">{{ weather.position }}</div>
+        </div>
+        <div id="date">
+          <div id="month">{{ weather.date.month }}</div>
+          <div id="day">{{ weather.date.day }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="content" id="second-content">
+      <!-- The Shiba Inu is the smallest of the six original and distinct spitz breeds
+    of dog from Japan. A small, agile dog that copes very well with mountainous
+    terrain, the Shiba Inu was originally bred for hunting. -->
+      <div id="weather-info-container">
+        <div id="wind" class="weather-info">
+          <div id="wind-img">
+            <img src="./../../../../../assets/waves.png" alt="" />
+          </div>
+          <div id="wind-info" class="info">
+            {{ weather.wind }}
+          </div>
+        </div>
+        <div id="rain" class="weather-info">
+          <div id="rain-img">
+            <img src="./../../../../../assets/water-drop.png" alt="" />
+          </div>
+          <div id="rain-info" class="info">{{ weather.rain }}</div>
+        </div>
+        <div id="sun" class="weather-info">
+          <div id="sun-img">
+            <img src="./../../../../../assets/small-sun.png" alt="" />
+          </div>
+          <div id="sun-info" class="info">{{ weather.sun }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
