@@ -5,10 +5,9 @@ using System.Web;
 
 namespace Moja_stacja_pogodowa.Models.Weather
 {
-    public class TodayWeather
+    public class FiveDaysWeather
     {
         public string Temperature { get; set; }
         public string WindSpeed { get; set; }
-
     }
 }

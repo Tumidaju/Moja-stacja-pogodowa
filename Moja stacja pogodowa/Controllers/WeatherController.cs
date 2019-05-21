@@ -11,9 +11,9 @@ namespace Moja_stacja_pogodowa.Controllers
     [System.Web.Http.Authorize]
     public class WeatherController : ApiController
     {
-        public TodayWeather Today()
+        public CurrentWeather Today()
         {
-            var model = new TodayWeather() { Temperature = "-43", WindSpeed = "Działa tak jak trzeba" };
+            var model = new CurrentWeather() { Temperature = "-43", WindSpeed = "Działa tak jak trzeba" };
             return model;
         }
     }

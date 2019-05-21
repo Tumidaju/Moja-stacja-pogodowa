@@ -8,6 +8,33 @@ namespace Moja_stacja_pogodowa.Migrations
         public override void Up()
         {
             CreateTable(
+                "dbo.APIs",
+                c => new
+                {
+                    Id = c.Int(nullable: false, identity: true),
+                    Name = c.String(nullable: false),
+                    URL = c.String(nullable: false),
+                })
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.Id, unique: true, name: "APIsIndex");
+            CreateTable(
+                "dbo.Config",
+                c => new
+                {
+                    Id = c.Int(nullable: false,identity:true),
+                    UserId = c.String(nullable: false, maxLength: 128),
+                    APIId = c.Int(nullable: false),
+                    APIKey = c.String(nullable: false, maxLength: 256),
+                    Latitude = c.String(nullable: false, maxLength: 256),
+                    Longtitude = c.String(nullable: false, maxLength: 256),
+
+                })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.APIs", t => t.APIId, cascadeDelete: true)
+                .Index(t => t.Id, unique: true, name: "ConfigIndex");
+
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -79,6 +106,8 @@ namespace Moja_stacja_pogodowa.Migrations
         
         public override void Down()
         {
+            DropForeignKey("dbo.Config", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Config", "APIId", "dbo.APIs");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
