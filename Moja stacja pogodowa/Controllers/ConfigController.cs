@@ -11,29 +11,31 @@ using System.Web.Mvc;
 
 namespace Moja_stacja_pogodowa.Controllers
 {
-    [System.Web.Http.Authorize]
+    [System.Web.Mvc.Authorize]
     public class ConfigController : ApiController
     {
         private IConfigRepository _ConfigRepository;
         private IAPIService _APIService;
 
-        public ConfigController(IConfigRepository ConfigRepository, IAPIService APIService)
+        public ConfigController(IConfigRepository ConfigRepository)
         {
             _ConfigRepository = ConfigRepository;
-            _APIService = APIService;
         }
-
-        public ConfigModel GetConfig(string UserId)
+        [System.Web.Http.HttpPost()]
+        [System.Web.Http.Route("api/Config/GetConfig")]
+        public ConfigModel GetConfig([FromBody()] string UserId)
         {
             var model = _ConfigRepository.Get(UserId);
             return model;
         }
-        public bool SetConfig(string UserId, ConfigModel configModel)
+        [System.Web.Mvc.HttpPost()]
+        [System.Web.Http.Route("api/Config/SetConfig")]
+        public bool SetConfig([FromBody()] ConfigModel ConfigModel)
         {
             var result = false;
             if (ModelState.IsValid)
             {
-                result = _ConfigRepository.Set(UserId, configModel);
+                result = _ConfigRepository.Set(ConfigModel);
             }
             return result;
         }

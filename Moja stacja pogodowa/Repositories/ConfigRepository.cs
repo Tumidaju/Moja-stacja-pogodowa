@@ -20,7 +20,7 @@ namespace Moja_stacja_pogodowa.Repositories
             return result;
         }
 
-        public bool Set(string UserId, ConfigModel model)
+        public bool Set(ConfigModel model)
         {
             var result = true;
             return result;

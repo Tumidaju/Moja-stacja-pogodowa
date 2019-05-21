@@ -10,6 +10,6 @@ namespace Moja_stacja_pogodowa.Repositories
     public interface IConfigRepository
     {
         ConfigModel Get(string UserId);
-        bool Set(string UserId, ConfigModel model);
+        bool Set(ConfigModel model);
     }
 }
