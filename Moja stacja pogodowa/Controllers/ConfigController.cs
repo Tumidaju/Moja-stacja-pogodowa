@@ -39,5 +39,12 @@ namespace Moja_stacja_pogodowa.Controllers
             }
             return result;
         }
+
+        [System.Web.Mvc.HttpPost()]
+        [System.Web.Http.Route("api/Config/IsValid")]
+        public bool Ping()
+        {
+            return true;
+        }
     }
 }
