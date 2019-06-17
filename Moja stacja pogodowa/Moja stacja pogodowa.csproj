@@ -66,6 +66,7 @@
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
     </Reference>
@@ -269,7 +270,16 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\API\APIModel.cs" />
     <Compile Include="Models\Config\ConfigModel.cs" />
+    <Compile Include="Models\Database\APIs.cs" />
+    <Compile Include="Models\Database\AspNetRoles.cs" />
+    <Compile Include="Models\Database\AspNetUserClaims.cs" />
+    <Compile Include="Models\Database\AspNetUserLogins.cs" />
+    <Compile Include="Models\Database\AspNetUsers.cs" />
+    <Compile Include="Models\Database\Config.cs" />
+    <Compile Include="Models\Database\C__MigrationHistory.cs" />
+    <Compile Include="Models\Database\DatabaseModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\UserId.cs" />
     <Compile Include="Models\Weather\HourlyWeather.cs" />
     <Compile Include="Models\Weather\FiveDaysWeather.cs" />
     <Compile Include="Models\Weather\CurrentWeather.cs" />
@@ -378,6 +388,9 @@
     <EmbeddedResource Include="Migrations\201905211705389_init.resx">
       <DependentUpon>201905211705389_init.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

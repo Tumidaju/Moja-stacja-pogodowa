@@ -1,4 +1,6 @@
-﻿using Moja_stacja_pogodowa.Models.Config;
+﻿using Moja_stacja_pogodowa.Models;
+using Moja_stacja_pogodowa.Models.API;
+using Moja_stacja_pogodowa.Models.Config;
 using Moja_stacja_pogodowa.Models.Weather;
 using Moja_stacja_pogodowa.Repositories;
 using Moja_stacja_pogodowa.Services;
@@ -16,16 +18,25 @@ namespace Moja_stacja_pogodowa.Controllers
     {
         private IConfigRepository _ConfigRepository;
         private IAPIService _APIService;
+        private IAPIRepository _IAPIRepository;
 
-        public ConfigController(IConfigRepository ConfigRepository)
+        public ConfigController(IConfigRepository ConfigRepository,IAPIRepository IAPIRepository)
         {
             _ConfigRepository = ConfigRepository;
+            _IAPIRepository = IAPIRepository;
         }
         [System.Web.Http.HttpPost()]
         [System.Web.Http.Route("api/Config/GetConfig")]
-        public ConfigModel GetConfig([FromBody()] string UserId)
+        public ConfigModel GetConfig([FromBody()] UserId User)
         {
-            var model = _ConfigRepository.Get(UserId);
+            var model = _ConfigRepository.Get(User.Id);
+            return model;
+        }
+        [System.Web.Http.HttpPost()]
+        [System.Web.Http.Route("api/Config/GetAPIList")]
+        public List<APIModel> GetAPIList()
+        {
+            var model = _IAPIRepository.GetAll();
             return model;
         }
         [System.Web.Mvc.HttpPost()]

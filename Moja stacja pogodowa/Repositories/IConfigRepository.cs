@@ -1,4 +1,5 @@
-﻿using Moja_stacja_pogodowa.Models.Config;
+﻿using Moja_stacja_pogodowa.Models.API;
+using Moja_stacja_pogodowa.Models.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;

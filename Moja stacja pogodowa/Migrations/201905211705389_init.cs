@@ -27,7 +27,6 @@ namespace Moja_stacja_pogodowa.Migrations
                     APIKey = c.String(nullable: false, maxLength: 256),
                     Latitude = c.String(nullable: false, maxLength: 256),
                     Longtitude = c.String(nullable: false, maxLength: 256),
-
                 })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
@@ -101,9 +100,13 @@ namespace Moja_stacja_pogodowa.Migrations
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
-            
+            Sql("SET IDENTITY_INSERT [dbo].[APIs] ON ; INSERT[dbo].[APIs]([Id], [Name], [URL]) VALUES(1, N'Open Weather Map', N'api.openweathermap.org/data/2.5/');SET IDENTITY_INSERT[dbo].[APIs] OFF;");
+            Sql("INSERT [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName]) VALUES (N'67c345b9-5e79-42f2-bd24-324577e28a9e', N'admin@myweather.com', 0, N'AKGzGSw5rpO6Qwy7tK9GgbTDvzmCfaJBfCJ81KMGwRqodauJ/q30vOVQcnXpT8vihA==', N'80665c98-90cf-46ef-a64d-ac3b461eb3fd', NULL, 0, 0, NULL, 0, 0, N'admin@myweather.com')");
+            Sql("INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (N'1', N'Administrator')");
+            Sql("INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'67c345b9-5e79-42f2-bd24-324577e28a9e', N'1')");
+            Sql("SET IDENTITY_INSERT [dbo].[Config] ON ;INSERT [dbo].[Config] ([Id], [UserId], [APIId], [APIKey], [Latitude], [Longtitude]) VALUES (1, N'67c345b9-5e79-42f2-bd24-324577e28a9e', 1, N'test_klucz', N'50.0618', N'19.938');SET IDENTITY_INSERT [dbo].[Config] OFF;");
         }
-        
+
         public override void Down()
         {
             DropForeignKey("dbo.Config", "UserId", "dbo.AspNetUsers");
