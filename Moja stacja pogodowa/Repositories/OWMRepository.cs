@@ -13,10 +13,16 @@ namespace Moja_stacja_pogodowa.Repositories
     public class OWMWeatherRepository : IWeatherRepository
     {
         private readonly DatabaseModel _db;
+        private string _latitude { get; set; }
+        private string _longtitude { get; set; }
+        private string _url { get; set; }
 
-        public OWMWeatherRepository(DatabaseModel db)
+        public OWMWeatherRepository(DatabaseModel db, string APIUrl, string Latitude, string Longtitude)
         {
             _db = db;
+            _latitude = Latitude;
+            _longtitude = Longtitude;
+            _url = APIUrl;
         }
         public CurrentWeather getFToday()
         {

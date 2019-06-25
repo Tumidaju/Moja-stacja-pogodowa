@@ -38,11 +38,8 @@ namespace Moja_stacja_pogodowa.Providers
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
                 return;
             }
-
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
                OAuthDefaults.AuthenticationType);
-            oAuthIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
-
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
                 CookieAuthenticationDefaults.AuthenticationType);
 
@@ -58,7 +55,6 @@ namespace Moja_stacja_pogodowa.Providers
             {
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);
             }
-
             return Task.FromResult<object>(null);
         }
 
