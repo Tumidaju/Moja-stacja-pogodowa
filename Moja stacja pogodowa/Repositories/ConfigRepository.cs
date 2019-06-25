@@ -13,6 +13,7 @@ namespace Moja_stacja_pogodowa.Repositories
     {
         private readonly DatabaseModel _db;
 
+
         public ConfigRepository(DatabaseModel db)
         {
             _db = db;

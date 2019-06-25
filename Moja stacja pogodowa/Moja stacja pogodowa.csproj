@@ -260,6 +260,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IAPIRepository.cs" />
     <Compile Include="IoC\UnityResolver .cs" />
     <Compile Include="Migrations\201905211705389_init.cs" />
     <Compile Include="Migrations\201905211705389_init.Designer.cs">
@@ -280,15 +281,19 @@
     <Compile Include="Models\Database\DatabaseModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\UserId.cs" />
+    <Compile Include="Models\Weather\TwoDaysWeather.cs" />
     <Compile Include="Models\Weather\HourlyWeather.cs" />
     <Compile Include="Models\Weather\FiveDaysWeather.cs" />
     <Compile Include="Models\Weather\CurrentWeather.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Repositories\WBWeatherRepository.cs" />
+    <Compile Include="Repositories\AWWeatherRepository.cs" />
+    <Compile Include="Repositories\OWMRepository.cs" />
     <Compile Include="Repositories\ConfigRepository.cs" />
     <Compile Include="Repositories\APIRepository.cs" />
-    <Compile Include="Repositories\IConfigRepository.cs" />
-    <Compile Include="Repositories\IAPIRepository.cs" />
+    <Compile Include="Interfaces\IConfigRepository.cs" />
+    <Compile Include="Interfaces\IWeatherRepository.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Services\IAPIService.cs" />
     <Compile Include="Startup.cs" />
@@ -337,7 +342,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

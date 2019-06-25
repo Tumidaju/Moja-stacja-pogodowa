@@ -41,6 +41,8 @@ namespace Moja_stacja_pogodowa.Providers
 
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
                OAuthDefaults.AuthenticationType);
+            oAuthIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
+
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
                 CookieAuthenticationDefaults.AuthenticationType);
 
