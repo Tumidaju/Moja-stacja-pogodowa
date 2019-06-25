@@ -59,13 +59,13 @@ namespace Moja_stacja_pogodowa.Controllers
             switch (user.APIId)
             {
                 case 1:
-                    _weatherRepository = new OWMWeatherRepository(_db, api.URL, user.Latitude, user.Longtitude);
+                    _weatherRepository = new OWMWeatherRepository(_db, api.URL,user.APIIKey, user.Latitude, user.Longtitude);
                     break;
                 case 2:
-                    _weatherRepository = new AWWeatherRepository(_db, api.URL, user.Latitude, user.Longtitude);
+                    _weatherRepository = new AWWeatherRepository(_db, api.URL, user.APIIKey, user.Latitude, user.Longtitude);
                     break;
                 case 3:
-                    _weatherRepository = new WBWeatherRepository(_db, api.URL, user.Latitude, user.Longtitude);
+                    _weatherRepository = new WBWeatherRepository(_db, api.URL, user.APIIKey, user.Latitude, user.Longtitude);
                     break;
             }
         }

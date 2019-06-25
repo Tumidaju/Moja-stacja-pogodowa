@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Controllers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -51,10 +55,12 @@ namespace Moja_stacja_pogodowa.Providers
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
+            
             foreach (KeyValuePair<string, string> property in context.Properties.Dictionary)
             {
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);
             }
+            context.AdditionalResponseParameters.Add("userID", context.Identity.GetUserId());
             return Task.FromResult<object>(null);
         }
 
