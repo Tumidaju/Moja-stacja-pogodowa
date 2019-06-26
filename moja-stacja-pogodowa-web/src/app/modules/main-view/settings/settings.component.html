@@ -34,11 +34,18 @@
       <mat-tab label="settings">
         <ng-template mat-tab-label>
           <mat-icon>settings</mat-icon>
-          <span class="tab-name">Ustawienia kluczy API</span>
+          <span class="tab-name">Konfiguracja widgetów</span>
         </ng-template>
-        <app-widget-settings
+        <app-widget-settings></app-widget-settings>
+      </mat-tab>
+      <mat-tab label="settings">
+        <ng-template mat-tab-label>
+          <mat-icon>settings</mat-icon>
+          <span class="tab-name">Konfiguracja kluczy API</span>
+        </ng-template>
+        <app-keys-settings
           [weatherApiKeys]="weatherApiKeys$ | async"
-        ></app-widget-settings>
+        ></app-keys-settings>
       </mat-tab>
     </mat-tab-group>
   </div>
