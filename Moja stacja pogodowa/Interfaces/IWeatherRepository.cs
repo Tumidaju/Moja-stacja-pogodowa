@@ -10,8 +10,8 @@ namespace Moja_stacja_pogodowa.Repositories
 {
     public interface IWeatherRepository
     {
-        CurrentWeather getFToday();
-        TwoDaysWeather getF2Days();
-        FiveDaysWeather getF5Days();
+        string getFToday();
+        string getF2Days();
+        string getF5Days();
     }
 }

@@ -3,6 +3,8 @@ using Moja_stacja_pogodowa.Models.Config;
 using Moja_stacja_pogodowa.Models.Database;
 using Moja_stacja_pogodowa.Models.Weather;
 using Moja_stacja_pogodowa.Models.Weather.OWM;
+using Moja_stacja_pogodowa.Models.Widget;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
@@ -15,17 +17,19 @@ namespace Moja_stacja_pogodowa.Repositories
 {
     public class OWMWeatherRepository : IWeatherRepository
     {
-        private readonly DatabaseModel _db;
+        private readonly DBModel _db;
         private string _latitude { get; set; }
         private string _longtitude { get; set; }
+        private string _cityId { get; set; }
         private string _apiKey { get; set; }
         private HttpClient _client { get; set; }
 
-        public OWMWeatherRepository(DatabaseModel db, string APIUrl, string APIKey, string Latitude, string Longtitude)
+        public OWMWeatherRepository(DBModel db, string APIUrl, string APIKey, WidgetModel widget)
         {
             _db = db;
-            _latitude = Latitude;
-            _longtitude = Longtitude;
+            _latitude = widget.Lat;
+            _longtitude = widget.Long;
+            _cityId = widget.CityId;
             _apiKey = APIKey;
             _client = new HttpClient()
             {
@@ -34,51 +38,50 @@ namespace Moja_stacja_pogodowa.Repositories
             _client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
         }
-        public CurrentWeather getFToday()
+        public string getFToday()
         {
+            DayWeatherModel dataObject = new DayWeatherModel();
             string urlParameters = string.Concat("weather?lat=", _latitude, "&lon=", _longtitude, "&lang=pl_pl&units=metric&appid=", _apiKey);
             HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
             if (response.IsSuccessStatusCode)
             {
-                var dataObject = response.Content.ReadAsAsync<DayWeatherModel>().Result;  
+                dataObject = response.Content.ReadAsAsync<DayWeatherModel>().Result;  
             }
             else
             {
                 //error
             }
-
-            var model = new CurrentWeather();
-            return model;
+            return JsonConvert.SerializeObject(dataObject);
         }
-        public TwoDaysWeather getF2Days()
+        public string getF2Days()
         {
+            ForecastModel dataObject = new ForecastModel();
             string urlParameters = string.Concat("forecast?lat=", _latitude, "&lon=", _longtitude, "&units=metric&cnt=16&lang=pl_pl&appid=", _apiKey);
             HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
             if (response.IsSuccessStatusCode)
             {
-                var dataObject = response.Content.ReadAsAsync<ForecastModel>().Result;
+                dataObject = response.Content.ReadAsAsync<ForecastModel>().Result;
             }
             else
             {
                 //error
             }
-            var model = new TwoDaysWeather();
-            return model;
+            return JsonConvert.SerializeObject(dataObject);
         }
-        public FiveDaysWeather getF5Days()
+        public string getF5Days()
         {
+            ForecastModel dataObject = new ForecastModel();
             string urlParameters = string.Concat("forecast?lat=", _latitude, "&lon=", _longtitude, "&units=metric&cnt=40&lang=pl_pl&appid=", _apiKey);
             HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
             if (response.IsSuccessStatusCode)
             {
-                var dataObject = response.Content.ReadAsAsync<ForecastModel>().Result;
+                dataObject = response.Content.ReadAsAsync<ForecastModel>().Result;
             }
             else
             {
                 //error
             }
-            var model = new FiveDaysWeather();
-            return model;
+            return JsonConvert.SerializeObject(dataObject);
         }
     }
 }

@@ -15,21 +15,14 @@ namespace Moja_stacja_pogodowa.Models.Database
         [StringLength(128)]
         public string UserId { get; set; }
 
-        public int APIId { get; set; }
-
-        [Required]
         [StringLength(256)]
-        public string APIKey { get; set; }
+        public string OWMKey { get; set; }
 
-        [Required]
         [StringLength(256)]
-        public string Latitude { get; set; }
+        public string AWKey { get; set; }
 
-        [Required]
         [StringLength(256)]
-        public string Longtitude { get; set; }
-
-        public virtual APIs APIs { get; set; }
+        public string WBKey { get; set; }
 
         public virtual AspNetUsers AspNetUsers { get; set; }
     }

@@ -11,5 +11,6 @@ namespace Moja_stacja_pogodowa.Repositories
     {
         List<APIModel> GetAll();
         APIModel Get(int APIId);
+        string GetCityList(int APIId);
     }
 }

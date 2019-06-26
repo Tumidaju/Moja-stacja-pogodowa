@@ -14,6 +14,7 @@ namespace Moja_stacja_pogodowa.Models.Database
             AspNetUserClaims = new HashSet<AspNetUserClaims>();
             AspNetUserLogins = new HashSet<AspNetUserLogins>();
             Config = new HashSet<Config>();
+            UserWidgets = new HashSet<UserWidgets>();
             AspNetRoles = new HashSet<AspNetRoles>();
         }
 
@@ -52,6 +53,9 @@ namespace Moja_stacja_pogodowa.Models.Database
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Config> Config { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserWidgets> UserWidgets { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetRoles> AspNetRoles { get; set; }

@@ -11,21 +11,21 @@ namespace Moja_stacja_pogodowa.Repositories
 {
     public class ConfigRepository : IConfigRepository
     {
-        private readonly DatabaseModel _db;
+        private readonly DBModel _db;
 
 
-        public ConfigRepository(DatabaseModel db)
+        public ConfigRepository(DBModel db)
         {
             _db = db;
         }
         public ConfigModel Get(string UserId)
         {
-            var result = _db.Config.Where(x => x.UserId == UserId).Select(x => new ConfigModel() {
-                UserId=x.UserId,
-                APIId=x.APIId,
-                APIIKey=x.APIKey,
-                Latitude=x.Latitude,
-                Longtitude=x.Longtitude
+            var result = _db.Config.Where(x => x.UserId == UserId).Select(x => new ConfigModel()
+            {
+                UserId = x.UserId,
+                AWKey = x.AWKey,
+                OWMKey = x.OWMKey,
+                WBKey = x.WBKey
             }).FirstOrDefault();
             return result;
         }
@@ -36,29 +36,28 @@ namespace Moja_stacja_pogodowa.Repositories
             var FromDb = _db.Config.Where(x => x.UserId == model.UserId).FirstOrDefault();
             if (FromDb != null)
             {
-                FromDb.Latitude = model.Latitude;
-                FromDb.Longtitude = model.Longtitude;
-                FromDb.APIId = model.APIId;
-                FromDb.APIKey = model.APIIKey;
+                FromDb.AWKey = model.AWKey;
+                FromDb.OWMKey = model.OWMKey;
+                FromDb.WBKey = model.WBKey;
             }
             else
             {
-                Config entry = new Config() {
+                Config entry = new Config()
+                {
                     UserId = model.UserId,
-                    APIId=model.APIId,
-                    APIKey=model.APIIKey,
-                    Latitude=model.Latitude,
-                    Longtitude=model.Longtitude
+                    AWKey = model.AWKey,
+                    OWMKey = model.OWMKey,
+                    WBKey = model.WBKey
                 };
                 _db.Config.Add(entry);
             }
             try
             {
-                if (_db.SaveChanges()>0)
+                if (_db.SaveChanges() > 0)
                 {
-                    result= true;
+                    result = true;
                 }
-                
+
             }
             catch (DbEntityValidationException ex)
             {

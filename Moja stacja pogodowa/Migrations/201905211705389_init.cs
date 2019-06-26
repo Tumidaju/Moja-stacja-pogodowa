@@ -23,16 +23,28 @@ namespace Moja_stacja_pogodowa.Migrations
                 {
                     Id = c.Int(nullable: false,identity:true),
                     UserId = c.String(nullable: false, maxLength: 128),
-                    APIId = c.Int(nullable: false),
-                    APIKey = c.String(nullable: false, maxLength: 256),
-                    Latitude = c.String(nullable: false, maxLength: 256),
-                    Longtitude = c.String(nullable: false, maxLength: 256),
+                    OWMKey = c.String(nullable: true, maxLength: 256),
+                    AWKey = c.String(nullable: true, maxLength: 256),
+                    WBKey = c.String(nullable: true, maxLength: 256),
                 })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
-                .ForeignKey("dbo.APIs", t => t.APIId, cascadeDelete: true)
                 .Index(t => t.Id, unique: true, name: "ConfigIndex");
-
+            CreateTable(
+                "dbo.UserWidgets",
+                c => new
+                {
+                    Id = c.Int(nullable: false, identity: true),
+                    UserId = c.String(nullable: false, maxLength: 128),
+                    APIID = c.Int(nullable: false),
+                    Name = c.String(nullable: false, maxLength: 256),
+                    Lat = c.String(nullable: true, maxLength: 256),
+                    Lon = c.String(nullable: true, maxLength: 256),
+                    CityID = c.String(nullable: true, maxLength: 256),
+                })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.Id, unique: true, name: "UserWidgetsIndex");
             CreateTable(
                 "dbo.AspNetRoles",
                 c => new
@@ -100,16 +112,11 @@ namespace Moja_stacja_pogodowa.Migrations
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
-            Sql("SET IDENTITY_INSERT [dbo].[APIs] ON ; INSERT[dbo].[APIs]([Id], [Name], [URL]) VALUES(1, N'Open Weather Map API', N'http://api.openweathermap.org/data/2.5/');INSERT[dbo].[APIs]([Id], [Name], [URL]) VALUES(2, N'AccuWeather API', N'http://dataservice.accuweather.com/');INSERT[dbo].[APIs]([Id], [Name], [URL]) VALUES(3, N'Weatherbit API', N'https://weatherbit-v1-mashape.p.rapidapi.com/');SET IDENTITY_INSERT[dbo].[APIs] OFF;");
+            Sql("SET IDENTITY_INSERT [dbo].[APIs] ON ; INSERT[dbo].[APIs]([Id], [Name], [URL]) VALUES(1, N'Open Weather Map API', N'http://api.openweathermap.org/data/2.5/');INSERT[dbo].[APIs]([Id], [Name], [URL]) VALUES(2, N'AccuWeather API', N'http://dataservice.accuweather.com/');INSERT[dbo].[APIs]([Id], [Name], [URL]) VALUES(3, N'Weatherbit API', N'http://api.weatherbit.io/v2.0/');SET IDENTITY_INSERT[dbo].[APIs] OFF;");
             Sql("INSERT [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName]) VALUES (N'67c345b9-5e79-42f2-bd24-324577e28a9e', N'admin@myweather.com', 0, N'AKGzGSw5rpO6Qwy7tK9GgbTDvzmCfaJBfCJ81KMGwRqodauJ/q30vOVQcnXpT8vihA==', N'80665c98-90cf-46ef-a64d-ac3b461eb3fd', NULL, 0, 0, NULL, 0, 0, N'admin@myweather.com')");
             Sql("INSERT [dbo].[AspNetRoles] ([Id], [Name]) VALUES (N'1', N'Administrator')");
             Sql("INSERT [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES (N'67c345b9-5e79-42f2-bd24-324577e28a9e', N'1')");
-            Sql("SET IDENTITY_INSERT [dbo].[Config] ON ;INSERT [dbo].[Config] ([Id], [UserId], [APIId], [APIKey], [Latitude], [Longtitude]) VALUES (1, N'67c345b9-5e79-42f2-bd24-324577e28a9e', 1, N'eaf380aa7f2b7e32bf1c9725bfa7cdd8', N'50.0618', N'19.938');SET IDENTITY_INSERT [dbo].[Config] OFF;");
-            //Sql("SET IDENTITY_INSERT [dbo].[Config] ON ;INSERT [dbo].[Config] ([Id], [UserId], [APIId], [APIKey], [Latitude], [Longtitude]) VALUES (2, N'67c345b9-5e79-42f2-bd24-324577e28a9e', 2, N'Hr7VjQ41OwqYc2sD1dIgpndhQE8jcKma', N'50.0618', N'19.938');SET IDENTITY_INSERT [dbo].[Config] OFF;");
-            //Sql("SET IDENTITY_INSERT [dbo].[Config] ON ;INSERT [dbo].[Config] ([Id], [UserId], [APIId], [APIKey], [Latitude], [Longtitude]) VALUES (3, N'67c345b9-5e79-42f2-bd24-324577e28a9e', 3, N'e0b7d70554374825a353d6664e817338', N'50.0618', N'19.938');SET IDENTITY_INSERT [dbo].[Config] OFF;");
-            //https://www.weatherbit.io/api
-            //https://openweathermap.org/api
-            //https://developer.accuweather.com/apis
+            Sql("SET IDENTITY_INSERT [dbo].[Config] ON ;INSERT [dbo].[Config] ([Id], [UserId], [OWMKey], [AWKey], [WBKey]) VALUES (1, N'67c345b9-5e79-42f2-bd24-324577e28a9e', N'eaf380aa7f2b7e32bf1c9725bfa7cdd8', N'Hr7VjQ41OwqYc2sD1dIgpndhQE8jcKma', N'e0b7d70554374825a353d6664e817338');SET IDENTITY_INSERT [dbo].[Config] OFF;");
         }
 
         public override void Down()

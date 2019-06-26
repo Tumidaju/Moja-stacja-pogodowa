@@ -8,12 +8,6 @@ namespace Moja_stacja_pogodowa.Models.Database
 
     public partial class APIs
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public APIs()
-        {
-            Config = new HashSet<Config>();
-        }
-
         public int Id { get; set; }
 
         [Required]
@@ -21,8 +15,5 @@ namespace Moja_stacja_pogodowa.Models.Database
 
         [Required]
         public string URL { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Config> Config { get; set; }
     }
 }
