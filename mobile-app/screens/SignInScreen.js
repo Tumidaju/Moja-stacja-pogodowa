@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import AutenticationHelper from '../components/AutenticationHelper';
 import Alert from '../components/Alert';
+import { Image } from 'react-native'
 
 class SignInScreen extends React.Component {
     constructor(props) {
@@ -66,7 +67,11 @@ class SignInScreen extends React.Component {
                 style={styles.container}
                 contentContainerStyle={styles.contentContainer}>
                 <View style={styles.getStartedContainer}>
-                    <Text>Zaloguj się do aplikacji</Text>
+                  <Image
+                    source={require('../assets/images/logo.png')}
+                    style={styles.welcomeImage}
+                  />
+                  <Text style={styles.mainTitle}>Moja stacja pogodowa</Text>
                     <Input placeholder='E-mail' 
                         onChangeText={this._loginChanged} 
                         editable={true} 
@@ -81,7 +86,7 @@ class SignInScreen extends React.Component {
                     <View style={styles.getStartedContainer}>
                     <Button onPress={this._logIn}
                         title="Zaloguj się"
-                        color="#841584"
+                        color="#68b78a"
                         style={styles.logInButtonStyle}/>
                     <Button onPress={this._signUp}
                         title="Utwórz konto"
@@ -189,5 +194,10 @@ const styles = StyleSheet.create({
   logInButtonStyle: {
     marginTop: 75,
     alignItems: 'center'
+  },
+
+  mainTitle: {
+    marginTop: 20,
+    fontSize: 20
   }
 });
