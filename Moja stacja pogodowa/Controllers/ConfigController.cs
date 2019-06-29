@@ -51,6 +51,8 @@ namespace Moja_stacja_pogodowa.Controllers
             response.Content = new StringContent(model, Encoding.UTF8, "application/json");
             return response;
         }
+        
+        [AllowAnonymous]
         [System.Web.Mvc.HttpPost()]
         [System.Web.Http.Route("api/Config/IsValid")]
         public bool Ping()
