@@ -28,7 +28,7 @@ export class AuthenticationService {
     //   'Content-Type': 'application/x-www-form-urlencoded'
     // });
     return this.http
-      .post<any>(this.config.apiUrl + 'Token', body, { headers })
+      .post<any>(this.config.tokenUrl + 'Token', body, { headers })
       .map(data => {
         // login successful if there's a jwt token in the response
         if (data && data.access_token) {
