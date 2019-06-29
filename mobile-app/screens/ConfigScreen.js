@@ -16,6 +16,8 @@ import Alert from '../components/Alert';
 import WeatherService from '../components/WeatherService'
 import SettingProvider from '../components/SettingProvider'
 import axios from "axios";
+import TokenInfo from '../components/TokenInfo';
+import RestHelper from '../components/RestHelper'
 
 class ConfigScreen extends React.Component {
     constructor(props) {
@@ -26,6 +28,9 @@ class ConfigScreen extends React.Component {
     state = {
         url: '',
         apiSuffix: '',
+        OWMKey: '',
+        AWKey: '',
+        WBKey: '',
     };
 
     _bootstrapAsync = async () => {
@@ -33,25 +38,61 @@ class ConfigScreen extends React.Component {
     };
 
     _restoreState = async () => {
+        const restHelper = new RestHelper();
+        const actionUrl = "Config/GetConfig";
+
+        const tokenInfo = new TokenInfo();
+        const userID = (await tokenInfo.getFullUserInfo()).userID;
+
+        let config = await restHelper.postWithToken(actionUrl, {
+            Id: userID
+        });
+
+        if(config == null)
+            return;
+
         const sp = new SettingProvider();
         const baseUrl = await sp.getBaseUrl();
         const suffixApi = await sp.getSuffixApi();
         this.setState({
             url: baseUrl,
-            apiSuffix: suffixApi
+            apiSuffix: suffixApi,
+            OWMKey: config.OWMKey,
+            AWKey: config.AWKey,
+            WBKey: config.WBKey,
         });
     };
 
     _save = async () => {
+        const restHelper = new RestHelper();
+        const actionUrl = "Config/SetConfig";
         const isValid = await this._ping();
-        if(!isValid) {
+        if(!isValid || !this._isUserProvidedInfoValid()) {
             Alert("Niepoprawna konfiguracja");
             return;
         }
+
+        const tokenInfo = new TokenInfo();
+        const userID = (await tokenInfo.getFullUserInfo()).userID;
+        const saveData = {
+            UserId: userID,
+            OWMKey: this.state.OWMKey,
+            AWKey: this.state.AWKey,
+            WBKey: this.state.WBKey
+        };
+
+        let saveResult = await restHelper.postWithToken(actionUrl, saveData);
+
         let json = JSON.stringify(this.state);
         AsyncStorage.setItem('config', json);
         this.props.navigation.navigate('AuthLoading');
     };
+
+    _isUserProvidedInfoValid() {
+        if(this.state.WBKey != null && this.state.OWMKey != null && this.state.AWKey != null)
+            return true;
+        return false;
+    }
 
     _urlChanged = text => {
         this.setState({ url: text });
@@ -59,6 +100,18 @@ class ConfigScreen extends React.Component {
 
     _apiSuffixChanged = text => {
         this.setState({ apiSuffix: text });
+    };
+
+    _OWMKeyChanged = text => {
+      this.setState({ OWMKey: text });
+    };
+
+    _AWKeyChanged = text => {
+      this.setState({ AWKey: text });
+    };
+
+    _WBKeyChanged = text => {
+      this.setState({ WBKey: text });
     };
 
     async _ping() {
@@ -88,6 +141,21 @@ class ConfigScreen extends React.Component {
                             onChangeText={this._apiSuffixChanged} 
                             editable={true} 
                             value={this.state.apiSuffix}/>
+
+                    <Input placeholder='OWMKey' 
+                            onChangeText={this._OWMKeyChanged} 
+                            editable={true} 
+                            value={this.state.OWMKey}/>
+
+                    <Input placeholder='AWKey' 
+                            onChangeText={this._AWKeyChanged} 
+                            editable={true} 
+                            value={this.state.AWKey}/>
+
+                    <Input placeholder='WBKey' 
+                            onChangeText={this._WBKeyChanged} 
+                            editable={true} 
+                            value={this.state.WBKey}/>
 
 
                     <View style={styles.getStartedContainer}>
