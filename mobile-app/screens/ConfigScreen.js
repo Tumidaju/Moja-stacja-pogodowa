@@ -42,7 +42,10 @@ class ConfigScreen extends React.Component {
         const actionUrl = "Config/GetConfig";
 
         const tokenInfo = new TokenInfo();
-        const userID = (await tokenInfo.getFullUserInfo()).userID;
+        const userInfo = await tokenInfo.getFullUserInfo();
+        if(userInfo == null)
+          this.props.navigation.navigate('Auth');
+        const userID = userInfo.userID;
 
         let config = await restHelper.postWithToken(actionUrl, {
             Id: userID
