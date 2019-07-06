@@ -45,6 +45,7 @@
         </ng-template>
         <app-keys-settings
           [weatherApiKeys]="weatherApiKeys$ | async"
+          (updateWeatherApiKeys)="updateWeatherApiKeys($event)"
         ></app-keys-settings>
       </mat-tab>
     </mat-tab-group>

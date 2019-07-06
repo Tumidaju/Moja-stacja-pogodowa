@@ -7,15 +7,20 @@ import {
   MatTabsModule,
   MatIconModule,
   MatInputModule,
-  MatButtonModule
+  MatButtonModule,
+  MatTableModule,
+  MatListModule,
+  MatMenuModule
 } from '@angular/material';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProgressBarModule } from 'primeng/progressbar';
-import { MainSettingsComponent } from './main-settings/main-settings.component';
+import { MainSettingsComponent } from './setting-tabs/main-settings/main-settings.component';
 import { SettingsComponent } from './settings.component';
 import { SettingsRoutingModule } from './settings.routing';
-import { WidgetSettingsComponent } from './widget-settings/widget-settings.component';
-import { KeysSettingsComponent } from './keys-settings/keys-settings.component';
+import { WidgetSettingsComponent } from './setting-tabs/widget-settings/widget-settings.component';
+import { KeysSettingsComponent } from './setting-tabs/keys-settings/keys-settings.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ListComponent } from './components/list/list.component';
 
 @NgModule({
   imports: [
@@ -29,13 +34,19 @@ import { KeysSettingsComponent } from './keys-settings/keys-settings.component';
     MatExpansionModule,
     MatInputModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    DragDropModule,
+    MatTableModule,
+    MatListModule,
+    MatButtonModule,
+    MatMenuModule
   ],
   declarations: [
     SettingsComponent,
     MainSettingsComponent,
     WidgetSettingsComponent,
-    KeysSettingsComponent
+    KeysSettingsComponent,
+    ListComponent
   ],
   providers: [ConfigService]
 })

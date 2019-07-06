@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { WeatherApiKeys } from 'src/app/models/weather-api-keys.model';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
@@ -28,6 +28,9 @@ export class KeysSettingsComponent implements OnInit {
   get weatherApiKeys(): WeatherApiKeys {
     return this._weatherApiKeys;
   }
+
+  @Output() updateWeatherApiKeys = new EventEmitter<WeatherApiKeys>();
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
@@ -45,6 +48,11 @@ export class KeysSettingsComponent implements OnInit {
   onSubmit(): void {
     if (!this.apiKeysForm.valid) {
     } else {
+      const apiWeatherKeys: WeatherApiKeys = {
+        ...this.apiKeysForm.value,
+        userId: this.weatherApiKeys.UserId
+      };
+      this.updateWeatherApiKeys.emit(apiWeatherKeys);
     }
   }
 }

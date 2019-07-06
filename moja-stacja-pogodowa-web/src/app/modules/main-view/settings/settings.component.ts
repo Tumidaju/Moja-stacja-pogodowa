@@ -69,5 +69,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
       });
     });
   }
+  updateWeatherApiKeys(weatherApiKeys: WeatherApiKeys): void {
+    this.configService
+      .setWeatherApiKeys(weatherApiKeys)
+      .pipe(first())
+      .subscribe(() => {});
+  }
   ngOnDestroy() {}
 }

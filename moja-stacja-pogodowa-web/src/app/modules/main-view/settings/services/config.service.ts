@@ -9,10 +9,18 @@ export class ConfigService {
   constructor(private http: HttpClient, private config: AppConfig) {}
   getWeatherApiKeys(userId: number): Observable<WeatherApiKeys> {
     return this.http.post<WeatherApiKeys>(
-      this.config.apiUrl + 'config/getconfig',
+      this.config.apiUrlLong + 'config/getconfig',
       {
         id: '67c345b9-5e79-42f2-bd24-324577e28a9e'
       }
+    );
+  }
+  setWeatherApiKeys(
+    weatherApiKeys: WeatherApiKeys
+  ): Observable<WeatherApiKeys> {
+    return this.http.post<WeatherApiKeys>(
+      this.config.apiUrlLong + 'config/setconfig',
+      weatherApiKeys
     );
   }
 }

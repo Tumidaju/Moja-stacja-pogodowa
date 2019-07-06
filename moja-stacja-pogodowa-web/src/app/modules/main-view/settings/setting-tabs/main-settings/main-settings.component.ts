@@ -8,9 +8,9 @@ import {
 import {
   ProfileDataStorage,
   UserProfile
-} from './../../../../auth/other/user.model';
-import { AccountService } from './../../../../auth/services/account.service';
-import { SharedService } from './../../../../services/shared.service';
+} from '../../../../../auth/other/user.model';
+import { AccountService } from '../../../../../auth/services/account.service';
+import { SharedService } from '../../../../../services/shared.service';
 
 @Component({
   selector: 'app-main-settings',
