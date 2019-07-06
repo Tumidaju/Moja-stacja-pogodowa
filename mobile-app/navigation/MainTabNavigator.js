@@ -13,6 +13,7 @@ import AuthLoadingScreen from '../screens/AuthLoadingScreen'
 import SignInScreen from '../screens/SignInScreen'
 import CreateAccount from '../screens/CreateAccount';
 import ConfigScreen from '../screens/ConfigScreen';
+import AddNewWidget from '../screens/AddNewWidget';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -70,6 +71,7 @@ const AppStack = createStackNavigator({ Home: HomeScreen, Links: LinksScreen, Se
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });
 const CreateAccountStack = createStackNavigator({CreateAccount: CreateAccount})
 const ConfigStack = createStackNavigator({ConfigScreen: ConfigScreen})
+const AddNewWidgetStack = createStackNavigator({AddNewWidget: AddNewWidget});
 
 export default createAppContainer(createSwitchNavigator(
   {
@@ -78,6 +80,7 @@ export default createAppContainer(createSwitchNavigator(
     Auth: AuthStack,
     SignUp: CreateAccountStack,
     Config: ConfigStack,
+    NewWidget: AddNewWidgetStack,
   },
   {
     initialRouteName: 'AuthLoading',

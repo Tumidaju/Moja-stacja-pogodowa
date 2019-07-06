@@ -22,42 +22,11 @@ class SignInScreen extends React.Component {
     }
 
     state = {
-        login: '',
-        password: '',
+
     };
 
-    _bootstrapAsync = () => {
-        const { navigation } = this.props;
-        this.state.login = navigation.getParam('login', '')
-    };
-
-    _logIn = async () => {
-        const autenticationHelper = new AutenticationHelper();
-        let loginData = {
-            grant_type: 'password',
-            login: this.state.login,
-            password: this.state.password,
-        };
-        const response = await autenticationHelper.getToken(loginData);
-        if(response != null && response.msg != null)
-            Alert(response.msg);
-        if(response.data.access_token == null)
-            Alert("Nie udało się zalogować się");
-        const responseTokenObject = response.data;
-        await AsyncStorage.setItem("userToken", JSON.stringify(responseTokenObject));
-        this.props.navigation.navigate('App');
-    };
-
-    _signUp = () => {
-        this.props.navigation.navigate('SignUp');
-    }
-
-    _loginChanged = text => {
-        this.setState({ login: text });
-    };
-
-    _passwordChanged = text => {
-        this.setState({ password: text });
+    _bootstrapAsync = async () => {
+        
     };
 
     render() {
@@ -67,43 +36,8 @@ class SignInScreen extends React.Component {
                     style={styles.container}
                     contentContainerStyle={styles.contentContainer}>
                 <View style={styles.getStartedContainer}>
-                    <Image
-                        source={require('../assets/images/logo.png')}
-                        style={styles.welcomeImage}/>
-                    <Text style={styles.mainTitle}>Moja stacja pogodowa</Text>
-
-                    <View style={styles.dataSection}>
-                        <Input placeholder='E-mail' 
-                            onChangeText={this._loginChanged} 
-                            editable={true} 
-                            value={this.state.login}/>
-                        <Input secureTextEntry={true} 
-                                textContentType="password" 
-                                placeholder='Hasło'
-                                onChangeText={this._passwordChanged} 
-                                editable={true} 
-                                value={this.state.password}/>
-                    </View>
-                    
-
-                    <View style={styles.getStartedContainer}>
-
-                    <View style={styles.buttonsContainer}>
-                        <View style={styles.logInButtonStyle}>
-                            <Button onPress={this._logIn}
-                                title="Zaloguj się"
-                                color="#68b78a"/>
-                        </View>
-                        <View style={styles.createButtonStyle}>
-                            <Button onPress={this._signUp}
-                                title="Utwórz konto"
-                                color="#717171"/>
-                        </View>
-                    </View>
-                    
-                    </View>
+                    <Text>Wpisz dane dotycząc miasta</Text>
                 </View>
-
                 
                 </ScrollView>
             </View>

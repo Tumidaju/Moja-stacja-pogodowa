@@ -14,6 +14,7 @@ import {
 import AutenticationHelper from '../components/AutenticationHelper';
 import Alert from '../components/Alert';
 import WeatherService from '../components/WeatherService'
+import { Col, Row, Grid } from "react-native-easy-grid";
 
 class HomeScreen extends React.Component {
     constructor(props) {
@@ -42,6 +43,10 @@ class HomeScreen extends React.Component {
         this.props.navigation.navigate('Config');
     }
 
+    _toAddNewWidget = () => {
+        this.props.navigation.navigate('NewWidget');
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -54,6 +59,10 @@ class HomeScreen extends React.Component {
                     <Text>Prędkość wiatru: {this.state.today.windSpeed}</Text>
                     
                     <View style={styles.getStartedContainer}>
+                    <Button onPress={this._toAddNewWidget}
+                        title="Dodaj widget pogodowy"
+                        color="#841584"
+                        style={styles.logInButtonStyle}/>
                     <Button onPress={this._toSetting}
                         title="Ustawienia"
                         color="#841584"
