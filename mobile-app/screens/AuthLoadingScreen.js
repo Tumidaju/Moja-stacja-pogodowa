@@ -19,12 +19,6 @@ class AuthLoadingScreen extends React.Component {
         const sp = new SettingProvider();
         const tokenInfo = new TokenInfo();
 
-        const isConfigExist = await sp.isSettingsExist();
-        if(!isConfigExist) {
-            this.props.navigation.navigate('Config');
-            return;
-        }
-
         const userToken = await tokenInfo.getCurrentToken();
 
         this.props.navigation.navigate(userToken ? 'App' : 'Auth');
