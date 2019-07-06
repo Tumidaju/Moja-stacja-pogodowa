@@ -18,24 +18,33 @@ import ModalDropdown from '../components/ModalDropdown';
 class BaseNavigation extends React.Component {
     static configActions = [
         'API', 
-        'Widżetów'
+        'Widżetów',
+        'Wyloguj się',
     ];
 
     static configActionsToRouteMappin = {
         0: 'Config',
-        1: 'NewWidget',
+        1: 'Widgets',
+        2: 'Auth',
     }
 
     static moveBack(navigation) {
         navigation.navigate('App')
     }
 
+    static choseOption(index, navigation) {
+        if(index == 2) {
+            AsyncStorage.removeItem('userToken')
+        }
+        navigation.navigate(this.configActionsToRouteMappin[index]);
+    }
+
     static navigationOptions = ({ navigation }) => {
         return {
             headerTitle: 'Pogoda',
             headerRight: (
-                <ModalDropdown options={this.configActions} defaultValue="Ustawienia" 
-                    dropdownStyle={{height: 41 * 2, alignItems: 'center', width: 102.17, right:0, top: 0}} 
+                <ModalDropdown options={this.configActions} defaultValue="USTAWIENIA" 
+                    dropdownStyle={{height: 41 * 3, alignItems: 'center', width: 102.17, right:0, top: 0}} 
                     dropdownTextStyle={{fontSize: 14, color: '#fff', backgroundColor: "#68b78a", textTransform: 'uppercase', width: 102.17}}
                     style={styles.menuContent}
                     textStyle={{fontSize: 14, color: '#fff', fontWeight: '500', padding: 8, width: 102.17, justifyContent: 'center'}}
@@ -45,7 +54,7 @@ class BaseNavigation extends React.Component {
                         top: 0
                         width: style.width
                     }}
-                    onSelect={(index, value) => navigation.navigate(this.configActionsToRouteMappin[index])}/>
+                    onSelect={(index, value) => this.choseOption(index, navigation)}/>
             ),
             headerLeft: (
                 <Button
