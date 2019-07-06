@@ -26,8 +26,6 @@ class ConfigScreen extends React.Component {
     }
 
     state = {
-        url: '',
-        apiSuffix: '',
         OWMKey: '',
         AWKey: '',
         WBKey: '',
@@ -55,11 +53,7 @@ class ConfigScreen extends React.Component {
             return;
 
         const sp = new SettingProvider();
-        const baseUrl = await sp.getBaseUrl();
-        const suffixApi = await sp.getSuffixApi();
         this.setState({
-            url: baseUrl,
-            apiSuffix: suffixApi,
             OWMKey: config.OWMKey,
             AWKey: config.AWKey,
             WBKey: config.WBKey,
@@ -97,14 +91,6 @@ class ConfigScreen extends React.Component {
         return false;
     }
 
-    _urlChanged = text => {
-        this.setState({ url: text });
-    };
-
-    _apiSuffixChanged = text => {
-        this.setState({ apiSuffix: text });
-    };
-
     _OWMKeyChanged = text => {
       this.setState({ OWMKey: text });
     };
@@ -119,7 +105,10 @@ class ConfigScreen extends React.Component {
 
     async _ping() {
         try {
-            let data = await axios.post(this.state.url + this.state.apiSuffix + "Config/IsValid");
+            const sp = new SettingProvider();
+            const url = await sp.getBaseUrl();
+            const apiSuffix = await sp.getSuffixApi();
+            let data = await axios.post(url + apiSuffix + "Config/IsValid");
             return data != null;
         } catch (error) {
             return false;
@@ -134,16 +123,6 @@ class ConfigScreen extends React.Component {
                     contentContainerStyle={styles.contentContainer}>
                 <View style={styles.getStartedContainer}>
                     <Text>Ustawienia (dla konfiguracji URL zawsze dodawaj '/' na końcu)</Text>
-
-                    <Input placeholder='Bazowy url do aplikacji webowej' 
-                            onChangeText={this._urlChanged} 
-                            editable={true} 
-                            value={this.state.url}/>
-
-                    <Input placeholder='Suffix do api (zwykłe /api)' 
-                            onChangeText={this._apiSuffixChanged} 
-                            editable={true} 
-                            value={this.state.apiSuffix}/>
 
                     <Input placeholder='OWMKey' 
                             onChangeText={this._OWMKeyChanged} 
