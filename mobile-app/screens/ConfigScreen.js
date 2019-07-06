@@ -20,6 +20,27 @@ import TokenInfo from '../components/TokenInfo';
 import RestHelper from '../components/RestHelper'
 
 class ConfigScreen extends React.Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerTitle: 'Moja stacja pogodowa',
+            headerRight: (
+                <Button
+                onPress={() => navigation.navigate('Config')}
+                title="Ustawienia"
+                color="#68b78a"
+                />
+            ),
+            headerLeft: (
+                <Button
+                  onPress={() => navigation.navigate('App')}
+                  title="Powróc"
+                  color="#68b78a"
+                />
+            ),
+            headerTitleStyle: { marginLeft: 20 },
+          };
+    };
+
     constructor(props) {
         super(props);
         this._bootstrapAsync();
@@ -122,7 +143,7 @@ class ConfigScreen extends React.Component {
                     style={styles.container}
                     contentContainerStyle={styles.contentContainer}>
                 <View style={styles.getStartedContainer}>
-                    <Text>Ustawienia (dla konfiguracji URL zawsze dodawaj '/' na końcu)</Text>
+                    <Text>Ustawienia użytkownika</Text>
 
                     <Input placeholder='OWMKey' 
                             onChangeText={this._OWMKeyChanged} 
@@ -140,11 +161,12 @@ class ConfigScreen extends React.Component {
                             value={this.state.WBKey}/>
 
 
-                    <View style={styles.getStartedContainer}>
-                        <Button onPress={this._save}
-                            title="Zapisz zmiany"
-                            color="#841584"
-                            style={styles.logInButtonStyle}/>
+                    <View style={styles.buttonsContainer}>
+                        <View style={styles.logInButtonStyle}>
+                            <Button onPress={this._save}
+                                title="Zapisz zmiany"
+                                color="#68b78a"/>
+                        </View>
                     </View>
                 </View>
                 </ScrollView>
@@ -160,6 +182,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  buttonsContainer: {
+    flex: 1,
+    flexDirection: 'row'
   },
   developmentModeText: {
     marginBottom: 20,
@@ -247,5 +273,5 @@ const styles = StyleSheet.create({
   logInButtonStyle: {
     marginTop: 75,
     alignItems: 'center'
-  }
+  },
 });
