@@ -15,8 +15,9 @@ import AutenticationHelper from '../components/AutenticationHelper';
 import Alert from '../components/Alert';
 import WeatherService from '../components/WeatherService'
 import { Col, Row, Grid } from "react-native-easy-grid";
+import BaseNavigation from '../components/BaseNavigation';
 
-class HomeScreen extends React.Component {
+class HomeScreen extends BaseNavigation {
     constructor(props) {
         super(props);
         this._bootstrapAsync();

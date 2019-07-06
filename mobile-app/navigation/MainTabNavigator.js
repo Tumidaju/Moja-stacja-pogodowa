@@ -61,11 +61,6 @@ SettingsStack.navigationOptions = {
   ),
 };
 
-// export default createBottomTabNavigator({
-//   HomeStack,
-//   LinksStack,
-//   SettingsStack,
-// });
 
 const AppStack = createStackNavigator({ Home: HomeScreen, Links: LinksScreen, Settings: SettingsScreen });
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });

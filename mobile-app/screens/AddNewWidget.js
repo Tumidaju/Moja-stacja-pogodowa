@@ -14,8 +14,9 @@ import {
 import AutenticationHelper from '../components/AutenticationHelper';
 import Alert from '../components/Alert';
 import { Image } from 'react-native'
+import BaseNavigation from '../components/BaseNavigation';
 
-class SignInScreen extends React.Component {
+class SignInScreen extends BaseNavigation {
     constructor(props) {
         super(props);
         this._bootstrapAsync();

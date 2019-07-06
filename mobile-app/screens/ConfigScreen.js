@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   AsyncStorage,
   StatusBar,
+  YellowBox
 } from 'react-native';
 import AutenticationHelper from '../components/AutenticationHelper';
 import Alert from '../components/Alert';
@@ -17,30 +18,11 @@ import WeatherService from '../components/WeatherService'
 import SettingProvider from '../components/SettingProvider'
 import axios from "axios";
 import TokenInfo from '../components/TokenInfo';
-import RestHelper from '../components/RestHelper'
+import RestHelper from '../components/RestHelper';
+import ModalDropdown from '../components/ModalDropdown';
+import BaseNavigation from '../components/BaseNavigation';
 
-class ConfigScreen extends React.Component {
-    static navigationOptions = ({ navigation }) => {
-        return {
-            headerTitle: 'Moja stacja pogodowa',
-            headerRight: (
-                <Button
-                onPress={() => navigation.navigate('Config')}
-                title="Ustawienia"
-                color="#68b78a"
-                />
-            ),
-            headerLeft: (
-                <Button
-                  onPress={() => navigation.navigate('App')}
-                  title="Powróc"
-                  color="#68b78a"
-                />
-            ),
-            headerTitleStyle: { marginLeft: 20 },
-          };
-    };
-
+class ConfigScreen extends BaseNavigation {
     constructor(props) {
         super(props);
         this._bootstrapAsync();
@@ -112,6 +94,8 @@ class ConfigScreen extends React.Component {
         return false;
     }
 
+    
+
     _OWMKeyChanged = text => {
       this.setState({ OWMKey: text });
     };
@@ -182,6 +166,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  menuContent: {
+    color: "#000",
+    padding: 2,
+    fontSize: 20,
+    backgroundColor: '#68b78a',
+    height:35,
+    justifyContent: 'center',
+    fontWeight: '500',
+    textTransform: 'uppercase'
+  },
+  menuOptions: {
+    backgroundColor: '#68b78a',
+  },
+  headerText: {
+    fontSize: 20,
+    margin: 10,
+    color: "#fff",
+    backgroundColor: '#68b78a',
   },
   buttonsContainer: {
     flex: 1,

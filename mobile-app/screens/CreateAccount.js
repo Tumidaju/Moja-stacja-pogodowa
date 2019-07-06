@@ -14,18 +14,12 @@ import {
   View,
 } from 'react-native';
 import EmailValidator from '../components/EmailValidator';
+import BaseNavigation from '../components/BaseNavigation';
 
 class CreateAccount extends React.Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            headerTitle: 'Moja stacja pogodowa',
-            headerRight: (
-                <Button
-                onPress={() => navigation.navigate('Config')}
-                title="Ustawienia"
-                color="#68b78a"
-                />
-            ),
+            headerTitle: 'Pogoda',
             headerLeft: (
                 <Button
                   onPress={() => navigation.navigate('Auth')}
@@ -36,7 +30,7 @@ class CreateAccount extends React.Component {
             headerTitleStyle: { marginLeft: 20 },
           };
     };
-
+    
     constructor(props) {
       super(props);
       this._bootstrapAsync();
