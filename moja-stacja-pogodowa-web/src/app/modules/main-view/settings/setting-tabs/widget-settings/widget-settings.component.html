@@ -59,6 +59,27 @@
                 [weatherBitCities]="weatherBitCities"
                 (submit)="onSubmit($event)"
               ></app-widget-form>
+
+              <div class="btnBox">
+                <button
+                  type="button"
+                  class="white"
+                  mat-raised-button
+                  color="warn"
+                  (click)="deleteWidget(widget)"
+                >
+                  Usuń
+                </button>
+                <button
+                  type="button"
+                  class="white"
+                  mat-raised-button
+                  color="primary"
+                  (click)="openWidgetDialog()"
+                >
+                  Dodaj nowy widget
+                </button>
+              </div>
             </ng-template>
           </mat-expansion-panel>
         </mat-accordion>

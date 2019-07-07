@@ -1,5 +1,5 @@
-import { ApiTypes } from './../../../../../../../models/api.enum';
-import { Cities } from 'src/app/models/city.type';
+import { ApiTypes } from '../../../../../../../enums/api.enum';
+import { Cities, City } from 'src/app/models/city.type';
 import {
   Component,
   OnInit,
@@ -21,13 +21,14 @@ import {
   MAT_DIALOG_DATA,
   MatAutocompleteSelectedEvent
 } from '@angular/material';
-import { Place } from 'src/app/models/place.enum';
+import { Place } from 'src/app/enums/place.enum';
 import { Api } from 'src/app/models/api.model';
 import { Observable } from 'rxjs';
 import { startWith, map, filter, tap } from 'rxjs/operators';
 import { CityOpenWeather } from 'src/app/models/city-open-weather/city-open-weather.model';
 import { CityAccuWeather } from 'src/app/models/city-accu-weather/city-accu-weather.model';
 import { CityWeatherBit } from 'src/app/models/city-weatherbit/city-weatherbit.model';
+import { Duration } from 'src/app/enums/duration.enum';
 
 @Component({
   selector: 'app-widget-form',
@@ -37,6 +38,7 @@ import { CityWeatherBit } from 'src/app/models/city-weatherbit/city-weatherbit.m
 export class WidgetFormComponent implements OnInit {
   place = Place;
   apiTypes = ApiTypes;
+  duration = Duration;
 
   cityControl: FormControl = new FormControl();
   filteredOptions: Observable<Cities>;
@@ -55,6 +57,7 @@ export class WidgetFormComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.form);
+    this.cityControl.setValue(this.form.value.city);
     this.filteredOptions = this.cityControl.valueChanges.pipe(
       startWith(''),
       map(name => this._filter(name as string))
@@ -90,16 +93,27 @@ export class WidgetFormComponent implements OnInit {
         break;
     }
   }
-  displayOpen(city?: CityOpenWeather): string | undefined {
-    return city ? city.name : undefined;
-  }
-  displayAccu(city?: CityAccuWeather): string | undefined {
-    return city ? city.LocalizedName : undefined;
-  }
-  displayBit(city?: CityWeatherBit): string | undefined {
-    return city ? city.city_name : undefined;
-  }
+  // displayOpen(city?: CityOpenWeather): string | undefined {
+  //   return city ? city.name : undefined;
+  // }
+  // displayAccu(city?: CityAccuWeather): string | undefined {
+  //   return city ? city.LocalizedName : undefined;
+  // }
+  // displayBit(city?: CityWeatherBit): string | undefined {
+  //   return city ? city.city_name : undefined;
+  // }
 
+  // tslint:disable: semicolon
+  displayFn = (city?: City): string | undefined => {
+    switch (this.form.value.APIId) {
+      case ApiTypes.openWeather:
+        return city ? (city as CityOpenWeather).name : undefined;
+      case ApiTypes.accuWeather:
+        return city ? (city as CityAccuWeather).LocalizedName : undefined;
+      case ApiTypes.weatherBit:
+        return city ? (city as CityWeatherBit).city_name : undefined;
+    }
+  };
   // setValues() {
   //   this.name.setValue(this.data.name);
   //   this.surname.setValue(this.data.surname);
@@ -108,10 +122,14 @@ export class WidgetFormComponent implements OnInit {
   //   this.typeOfStudy.setValue(this.data.typeOfStudy);
   //   this.dateOfCompletion.setValue(this.data.dateOfCompletion);
   // }
-  onSubmit() {
-    if (this.form.valid) {
-      this.submit.emit(this.form.getRawValue());
+  compareSelectValues(
+    selectedValue: string,
+    compareValue: number | string
+  ): boolean {
+    if (!compareValue) {
+      return undefined;
     }
+    return Number(selectedValue) === Number(compareValue);
   }
 
   private _filter(value: string): Cities {

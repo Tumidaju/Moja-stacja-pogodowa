@@ -20,4 +20,10 @@ export class WidgetService {
       { id: userId }
     );
   }
+  deleteWidget(userId: number, widgetId: number): Observable<any> {
+    return this.http.post<WidgetApi[]>(
+      this.config.apiUrlLong + 'widgets/deleteWidget',
+      { userId, id: widgetId }
+    );
+  }
 }

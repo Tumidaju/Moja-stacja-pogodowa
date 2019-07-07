@@ -1,7 +1,7 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CityAccuWeather } from './../../../../../../../models/city-accu-weather/city-accu-weather.model';
 import { CityWeatherBit } from './../../../../../../../models/city-weatherbit/city-weatherbit.model';
-import { ApiTypes } from './../../../../../../../models/api.enum';
+import { ApiTypes } from '../../../../../../../enums/api.enum';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Api } from 'src/app/models/api.model';
@@ -9,7 +9,8 @@ import { WidgetService } from '../../../../services/widget.service';
 import { first } from 'rxjs/operators';
 import { Widget, WidgetApiModel } from 'src/app/models/widget.model';
 import { CityOpenWeather } from 'src/app/models/city-open-weather/city-open-weather.model';
-import { Place } from 'src/app/models/place.enum';
+import { Place } from 'src/app/enums/place.enum';
+import { Duration } from 'src/app/enums/duration.enum';
 
 @Component({
   selector: 'app-widget-form-dialog',
@@ -37,7 +38,8 @@ export class WidgetFormDialogComponent implements OnInit {
       APIId: ['', Validators.required],
       place: Place.fromList,
       city: undefined,
-      geo: this.fb.group({ lat: undefined, long: undefined })
+      geo: this.fb.group({ lat: undefined, long: undefined }),
+      duration: Duration.oneDay
     });
   }
   onSubmit(): void {

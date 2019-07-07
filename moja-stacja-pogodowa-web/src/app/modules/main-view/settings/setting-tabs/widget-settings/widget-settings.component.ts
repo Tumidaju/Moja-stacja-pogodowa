@@ -1,4 +1,4 @@
-import { Place } from './../../../../../models/place.enum';
+import { Place } from '../../../../../enums/place.enum';
 import { City } from './../../../../../models/city.type';
 import { WidgetApiModel, Widget } from 'src/app/models/widget.model';
 import { WidgetService } from './../../services/widget.service';
@@ -14,7 +14,7 @@ import { first } from 'rxjs/operators';
 import { Cities } from 'src/app/models/city.type';
 import { CityOpenWeather } from 'src/app/models/city-open-weather/city-open-weather.model';
 import { CityWeatherBit } from 'src/app/models/city-weatherbit/city-weatherbit.model';
-import { ApiTypes } from 'src/app/models/api.enum';
+import { ApiTypes } from 'src/app/enums/api.enum';
 import { Api } from 'src/app/models/api.model';
 import { Observable, forkJoin } from 'rxjs';
 import { MatDialogRef, MatDialog } from '@angular/material';
@@ -75,46 +75,34 @@ export class WidgetSettingsComponent implements OnInit {
   }
   setData(): void {
     this.widgetArr.forEach(widget => {
-      const widgetWithCityName = this.addCityNameToWidget(widget);
-      console.log(widgetWithCityName);
-      const city = this.getCityByCityId(widget.APIId, widget.CityId);
-
-      // APIId: 2;
-      // CityId: '14256';
-      // Id: 2;
-      // Lat: '34.790878';
-      // Long: '48.570728';
-      // Name: 'Mój widget';
-      // UserId: '67c345b9-5e79-42f2-bd24-324577e28a9e';
-      // city: null;
-
-      // name: ['', Validators.required],
-      // APIId: ['', Validators.required],
-      // place: Place.fromList,
-      // city: undefined,
-      // geo: this.fb.group({ lat: undefined, long: undefined })
-
-      const obj: any = {
-        name: widgetWithCityName.Name,
-        APIId: widgetWithCityName.APIId,
-        place: widgetWithCityName.CityId ? Place.fromList : Place.geo,
-        geo: this.fb.group({
-          lat: widgetWithCityName.Lat,
-          long: widgetWithCityName.Long
-        }),
-        city
-      };
-      const widgetGroup = this.fb.group(obj);
-      (this.widgetForm.controls.widgets as FormArray).push(widgetGroup);
-      widgetGroup.controls.name.setValidators(Validators.required);
+      this.setWidgetGroup(widget);
     });
+  }
+  setWidgetGroup(widget: WidgetApi) {
+    const widgetWithCityName = this.addCityNameToWidget(widget);
+    const city = this.getCityByCityId(widget.APIId, Number(widget.CityId));
+    const obj: any = {
+      id: widgetWithCityName.Id,
+      name: widgetWithCityName.Name,
+      APIId: widgetWithCityName.APIId,
+      place: widgetWithCityName.CityId ? Place.fromList : Place.geo,
+      geo: this.fb.group({
+        lat: widgetWithCityName.Lat,
+        long: widgetWithCityName.Long
+      }),
+      duration: widgetWithCityName.Duration,
+      city
+    };
+    const widgetGroup = this.fb.group(obj);
+    (this.widgetForm.controls.widgets as FormArray).push(widgetGroup);
+    widgetGroup.controls.name.setValidators(Validators.required);
   }
   addCityNameToWidget(widget: WidgetApi): WidgetApiWithCity {
     const newWidget: WidgetApiWithCity = {
       ...widget,
       cityName: ''
     };
-    const city = this.getCityByCityId(widget.APIId, widget.CityId);
+    const city = this.getCityByCityId(widget.APIId, Number(widget.CityId));
     if (!city) {
       return widget as WidgetApiWithCity;
     }
@@ -154,16 +142,6 @@ export class WidgetSettingsComponent implements OnInit {
   }
   getApiList(): Observable<Api[]> {
     return this.configService.getWeatherApiTypes().pipe(first());
-    // .subscribe((data: Api[]) => {
-    //   this.apis = data;
-    //   this.getCityLists().subscribe((citiesDataArr: Cities[]) => {
-    //     citiesDataArr.forEach(citiesData => {
-    //       console.log(citiesData);
-    //       this.checkCitiesDataType(citiesData);
-    //     });
-    //     this.setData();
-    //   });
-    // });
   }
   getCityLists(): Observable<Cities[]> {
     const cityObsArr: Observable<Cities>[] = [];
@@ -219,7 +197,21 @@ export class WidgetSettingsComponent implements OnInit {
           .pipe(first())
           .subscribe(list => {
             this.widgetArr = list;
+            const lastWidget = this.widgetArr[this.widgetArr.length - 1];
+            this.setWidgetGroup(lastWidget);
           });
+      });
+  }
+  deleteWidget(widget: FormGroup) {
+    this.widgetService
+      .deleteWidget(this.userId, widget.value.id)
+      .pipe(first())
+      .subscribe(() => {
+        const widgets = this.widgetForm.controls.widgets as FormArray;
+        const index = widgets.controls.findIndex(
+          x => x.value.id === widget.value.id
+        );
+        widgets.removeAt(index);
       });
   }
   onSubmit(): void {
