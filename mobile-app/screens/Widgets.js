@@ -18,6 +18,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import BaseNavigation from '../components/BaseNavigation';
 import TokenInfo from '../components/TokenInfo';
 import RestHelper from '../components/RestHelper';
+import WidgetsService from '../components/WidgetsService';
 import { FlatList} from 'react-native'
 
 class Widgets extends BaseNavigation {
@@ -31,12 +32,8 @@ class Widgets extends BaseNavigation {
     };
 
     _bootstrapAsync = async () => {
-        const tokenInfo = new TokenInfo();
-        const restHelper = new RestHelper();
-
-        const userId = await tokenInfo.getUserId();
-
-        const widgets = await restHelper.postWithToken("Widgets/GetWidgets", {Id: userId});
+        const widgetsService = new WidgetsService();
+        const widgets = await widgetsService.getWidgets();
         this.setState({ widgets: widgets });
     };
 
