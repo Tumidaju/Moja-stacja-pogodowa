@@ -14,6 +14,12 @@ class TokenInfo {
             return null;
         return info.access_token;
     }
+
+    async getFullUserInfo() {
+        let tokenInfo = await AsyncStorage.getItem('userToken');
+        const info = JSON.parse(tokenInfo);
+        return info;
+    }
 }
 
 export default TokenInfo;

@@ -4,19 +4,11 @@ import {
 
 class SettingProvider {
     async getBaseUrl() {
-        const jsonConfig = await AsyncStorage.getItem('config');
-        const config = JSON.parse(jsonConfig);
-        if(config == null || config.url == null)
-            return "";
-        return config.url;
+        return "http://localhost:60898/";
     };
 
     async getSuffixApi() {
-        const jsonConfig = await AsyncStorage.getItem('config');
-        const config = JSON.parse(jsonConfig);
-        if(config == null || config.apiSuffix == null)
-            return "";
-        return config.apiSuffix;
+        return "api/";
     };
 
     async isSettingsExist() {

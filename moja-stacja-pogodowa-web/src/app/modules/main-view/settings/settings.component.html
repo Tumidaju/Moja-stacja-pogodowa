@@ -1,0 +1,53 @@
+<div id="settings-container">
+  <div id="profile-info">
+    <div id="avatar-field">
+      <div id="avatar">
+        <img src="./../../../assets/logo.png" />
+      </div>
+      <div id="avatar-info" *ngIf="userInfo$">
+        <h2 id="name">{{ userName }}</h2>
+        <div id="degree-info">
+          <span>{{ email }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="tab-groups">
+    <mat-tab-group mat-stretch-tabs [selectedIndex]="1">
+      <!-- <mat-tab label="profile">
+        <ng-template mat-tab-label>
+          <mat-icon>person</mat-icon>
+          <span class="tab-name">Profil</span>
+        </ng-template>
+        <ng-template matTabContent>
+          <app-add-admin-settings [loader]=loading (adminAdd)="addNewAdmin($event)"></app-add-admin-settings>
+        </ng-template>
+      </mat-tab> -->
+
+      <mat-tab label="settings">
+        <ng-template mat-tab-label>
+          <mat-icon>settings</mat-icon>
+          <span class="tab-name">Ustawienia</span>
+        </ng-template>
+        <app-main-settings [userInfo]="userInfo$ | async"></app-main-settings>
+      </mat-tab>
+      <mat-tab label="settings">
+        <ng-template mat-tab-label>
+          <mat-icon>settings</mat-icon>
+          <span class="tab-name">Konfiguracja widgetów</span>
+        </ng-template>
+        <app-widget-settings></app-widget-settings>
+      </mat-tab>
+      <mat-tab label="settings">
+        <ng-template mat-tab-label>
+          <mat-icon>settings</mat-icon>
+          <span class="tab-name">Konfiguracja kluczy API</span>
+        </ng-template>
+        <app-keys-settings
+          [weatherApiKeys]="weatherApiKeys$ | async"
+          (updateWeatherApiKeys)="updateWeatherApiKeys($event)"
+        ></app-keys-settings>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

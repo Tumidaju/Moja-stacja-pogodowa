@@ -13,6 +13,8 @@ import {
 } from 'react-native';
 import AutenticationHelper from '../components/AutenticationHelper';
 import Alert from '../components/Alert';
+import { Image } from 'react-native'
+import { Col, Row, Grid } from "react-native-easy-grid";
 
 class SignInScreen extends React.Component {
     constructor(props) {
@@ -63,32 +65,53 @@ class SignInScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <ScrollView
-                style={styles.container}
-                contentContainerStyle={styles.contentContainer}>
-                <View style={styles.getStartedContainer}>
-                    <Text>Zaloguj się do aplikacji</Text>
-                    <Input placeholder='E-mail' 
-                        onChangeText={this._loginChanged} 
-                        editable={true} 
-                        value={this.state.login}/>
-                    <Input secureTextEntry={true} 
-                            textContentType="password" 
-                            placeholder='Hasło' 
-                            onChangeText={this._passwordChanged} 
-                            editable={true} 
-                            value={this.state.password}/>
+                    style={styles.container}
+                    contentContainerStyle={styles.contentContainer}>
 
-                    <View style={styles.getStartedContainer}>
-                    <Button onPress={this._logIn}
-                        title="Zaloguj się"
-                        color="#841584"
-                        style={styles.logInButtonStyle}/>
-                    <Button onPress={this._signUp}
-                        title="Utwórz konto"
-                        color="#717171"/>
-                    
-                    </View>
-                </View>
+                <Grid>
+                    <Row>
+                        
+                        <Col style={{justifyContent: 'center', alignItems: 'center'}}>
+                            <Image
+                                source={require('../assets/images/logo.png')}
+                                style={styles.welcomeImage}/>
+                            <Text style={styles.mainTitle}>Moja stacja pogodowa</Text>
+
+                            <View style={styles.dataSection}>
+                                <Input placeholder='E-mail' 
+                                    onChangeText={this._loginChanged} 
+                                    editable={true} 
+                                    value={this.state.login}/>
+                                <Input secureTextEntry={true} 
+                                        textContentType="password" 
+                                        placeholder='Hasło'
+                                        onChangeText={this._passwordChanged} 
+                                        editable={true} 
+                                        value={this.state.password}/>
+                            </View>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <View style={styles.logInButtonStyle}>
+                                <Button onPress={this._logIn}
+                                    title="Zaloguj się"
+                                    color="#68b78a"/>
+                            </View>
+                        </Col>
+                        <Col>
+                            <View style={styles.createButtonStyle}>
+                                <Button onPress={this._signUp}
+                                    title="Utwórz konto"
+                                    color="#717171"/>
+                            </View>
+                        </Col>
+                    </Row>
+                </Grid>
+
+                
+
+                
                 </ScrollView>
             </View>
         );
@@ -99,9 +122,18 @@ class SignInScreen extends React.Component {
 export default SignInScreen
 
 const styles = StyleSheet.create({
+    buttonsContainer: {
+        flex: 1,
+        flexDirection: 'row'
+    },
+    dataSection: {
+        marginTop: 25,
+        width: 250,
+    },
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    flexDirection: 'column',
   },
   developmentModeText: {
     marginBottom: 20,
@@ -187,7 +219,19 @@ const styles = StyleSheet.create({
   },
 
   logInButtonStyle: {
-    marginTop: 75,
-    alignItems: 'center'
+    marginTop: 25,
+    justifyContent: 'flex-start',
+    marginRight: 10,
+  },
+
+  createButtonStyle: {
+    marginTop: 25,
+    justifyContent: 'flex-end',
+    marginLeft: 10,
+  },
+
+  mainTitle: {
+    marginTop: 20,
+    fontSize: 20
   }
 });

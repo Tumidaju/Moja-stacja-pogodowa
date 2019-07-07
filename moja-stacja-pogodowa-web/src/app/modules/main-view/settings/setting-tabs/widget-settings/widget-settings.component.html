@@ -1,0 +1,82 @@
+<!-- <div id="container">
+  <mat-list>
+    <h3 mat-subheader>Widgety</h3>
+    <mat-list-item *ngFor="let folder of folders">
+      <mat-icon mat-list-icon>home</mat-icon>
+      <h4 mat-line>{{ folder.name }}</h4>
+      <p mat-line>{{ folder.updated | date }}</p>
+      <button mat-icon-button [matMenuTriggerFor]="appMenu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </mat-list>
+</div>
+
+<mat-menu #appMenu="matMenu">
+  <button mat-menu-item>Edytuj</button>
+  <button mat-menu-item>Usuń</button>
+</mat-menu> -->
+
+<div id="container">
+  <form [formGroup]="widgetForm">
+    <!-- <pre>{{widgetForm.value | json }}</pre> -->
+    <div id="register-container">
+      <div id="form-container">
+        <mat-accordion>
+          <mat-expansion-panel
+            *ngFor="let widget of widgetForm['controls'].widgets['controls']"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Nazwa
+              </mat-panel-title>
+              <mat-panel-description>
+                <!-- {{ weatherApiKeys.OWMKey }} -->
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <ng-template matExpansionPanelContent>
+              <div class="fields">
+                <mat-form-field>
+                  <input matInput [formControl]="widget['controls'].name" />
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-label>Wybierz api</mat-label>
+                  <mat-select [formControl]="widget['controls'].APIId">
+                    <mat-option *ngFor="let api of apis" [value]="api.Id">
+                      {{ api.Name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="btnBox">
+                <button
+                  type="button"
+                  class="white"
+                  mat-raised-button
+                  color="primary"
+                  (click)="onSubmit()"
+                >
+                  Zapisz
+                </button>
+              </div>
+            </ng-template>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+      <div class="btnBox">
+        <button
+          type="button"
+          class="white"
+          mat-raised-button
+          color="primary"
+          (click)="onSubmit()"
+        >
+          Dodaj nowy widget
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

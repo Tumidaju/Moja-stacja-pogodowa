@@ -14,8 +14,23 @@ import {
   View,
 } from 'react-native';
 import EmailValidator from '../components/EmailValidator';
+import BaseNavigation from '../components/BaseNavigation';
 
 class CreateAccount extends React.Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerTitle: 'Pogoda',
+            headerLeft: (
+                <Button
+                  onPress={() => navigation.navigate('Auth')}
+                  title="Powróc"
+                  color="#68b78a"
+                />
+            ),
+            headerTitleStyle: { marginLeft: 20 },
+          };
+    };
+    
     constructor(props) {
       super(props);
       this._bootstrapAsync();
@@ -54,6 +69,11 @@ class CreateAccount extends React.Component {
         });
     }
 
+    _backToLogin = () => {
+        debugger;
+        this.props.navigation.navigate('Auth');
+    }
+
     _loginChanged = text => {
         this.setState({ login: text });
     };
@@ -74,25 +94,31 @@ class CreateAccount extends React.Component {
                 contentContainerStyle={styles.contentContainer}>
                 <View style={styles.getStartedContainer}>
                     <Text>Wpisz dane do utworzenia nowego konta</Text>
-                    <Input placeholder='E-mail' 
-                        onChangeText={this._loginChanged} 
-                        editable={true} 
-                        value={this.state.login}/>
-                    <Input secureTextEntry={true} 
-                        textContentType="password" 
-                        placeholder='Hasło' 
-                        onChangeText={this._passwordChanged} 
-                        editable={true} 
-                        value={this.state.password}/>
-                    <Input secureTextEntry={true} 
-                        textContentType="password" 
-                        placeholder='Powtórz hasło' 
-                        onChangeText={this._confirmedPasswordChanged} 
-                        editable={true} 
-                        value={this.state.confirmedPassword}/>
-                    <Button onPress={this._createAccount}
-                        title="Utwórz konto"
-                        color="#841584"/>
+
+                    <View style={styles.dataSection}>
+                        <Input placeholder='E-mail' 
+                            onChangeText={this._loginChanged} 
+                            editable={true} 
+                            value={this.state.login}/>
+                        <Input secureTextEntry={true} 
+                            textContentType="password" 
+                            placeholder='Hasło' 
+                            onChangeText={this._passwordChanged} 
+                            editable={true} 
+                            value={this.state.password}/>
+                        <Input secureTextEntry={true} 
+                            textContentType="password" 
+                            placeholder='Powtórz hasło' 
+                            onChangeText={this._confirmedPasswordChanged} 
+                            editable={true} 
+                            value={this.state.confirmedPassword}/>
+                    </View>
+                    
+                    <View style={styles.buttonsContainer}>
+                        <Button onPress={this._createAccount}
+                            title="Utwórz konto"
+                            color="#68b78a"/>
+                    </View>
                 </View>
             </ScrollView>
         </View>
@@ -106,6 +132,18 @@ const styles = StyleSheet.create({
 container: {
     flex: 1,
     backgroundColor: '#fff',
+},
+leftArrow: {
+    width: 100,
+},
+dataSection: {
+    marginTop: 25,
+    width: 500,
+},
+buttonsContainer: {
+    marginTop: 25,
+    flex: 1,
+    flexDirection: 'row'
 },
 developmentModeText: {
     marginBottom: 20,

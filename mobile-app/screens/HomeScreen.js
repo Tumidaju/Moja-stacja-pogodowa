@@ -14,8 +14,10 @@ import {
 import AutenticationHelper from '../components/AutenticationHelper';
 import Alert from '../components/Alert';
 import WeatherService from '../components/WeatherService'
+import { Col, Row, Grid } from "react-native-easy-grid";
+import BaseNavigation from '../components/BaseNavigation';
 
-class HomeScreen extends React.Component {
+class HomeScreen extends BaseNavigation {
     constructor(props) {
         super(props);
         this._bootstrapAsync();
@@ -52,17 +54,6 @@ class HomeScreen extends React.Component {
                     <Text>Kraków</Text>
                     <Text>Temperatura dziś: {this.state.today.temperature}</Text>
                     <Text>Prędkość wiatru: {this.state.today.windSpeed}</Text>
-                    
-                    <View style={styles.getStartedContainer}>
-                    <Button onPress={this._toSetting}
-                        title="Ustawienia"
-                        color="#841584"
-                        style={styles.logInButtonStyle}/>
-                    <Button onPress={this._logOut}
-                        title="Wyloguj się"
-                        color="red"
-                        style={styles.logInButtonStyle}/>
-                    </View>
                 </View>
                 </ScrollView>
             </View>
