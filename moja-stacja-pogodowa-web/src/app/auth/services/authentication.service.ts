@@ -20,15 +20,8 @@ export class AuthenticationService {
       'Content-Type': 'application/x-www-form-urlencoded'
     });
     const body = `grant_type=${'password'}&username=${username}&password=${password}`;
-    // const body = new URLSearchParams();
-    // body.set('grant_type', 'password');
-    // body.set('username', username);
-    // body.set('password', password);
-    // const headers = new HttpHeaders({
-    //   'Content-Type': 'application/x-www-form-urlencoded'
-    // });
     return this.http
-      .post<any>(this.config.tokenUrl + 'Token', body, { headers })
+      .post<any>(this.config.apiUrl + 'Token', body, { headers })
       .map(data => {
         // login successful if there's a jwt token in the response
         if (data && data.access_token) {

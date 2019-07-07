@@ -10,7 +10,8 @@ import {
   MatButtonModule,
   MatTableModule,
   MatListModule,
-  MatMenuModule
+  MatMenuModule,
+  MatSelectModule
 } from '@angular/material';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProgressBarModule } from 'primeng/progressbar';
@@ -39,7 +40,8 @@ import { ListComponent } from './components/list/list.component';
     MatTableModule,
     MatListModule,
     MatButtonModule,
-    MatMenuModule
+    MatMenuModule,
+    MatSelectModule
   ],
   declarations: [
     SettingsComponent,
