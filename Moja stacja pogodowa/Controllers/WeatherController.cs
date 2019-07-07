@@ -32,25 +32,25 @@ namespace Moja_stacja_pogodowa.Controllers
 
         [HttpPost()]
         [Route("api/Weather/FToday")]
-        public string FToday([FromBody()] int WidgetId)
+        public string FToday([FromBody()] GetWeatherModel getWeatherModel)
         {
-            CreateWeatherRepo(WidgetId);
+            CreateWeatherRepo(getWeatherModel.WidgetId);
             var model = _weatherRepository.getFToday();
             return model;
         }
         [HttpPost()]
         [Route("api/Weather/F2Days")]
-        public string F2Days([FromBody()] int WidgetId)
+        public string F2Days([FromBody()] GetWeatherModel getWeatherModel)
         {
-            CreateWeatherRepo(WidgetId);
+            CreateWeatherRepo(getWeatherModel.WidgetId);
             var model = _weatherRepository.getF2Days();
             return model;
         }
         [HttpPost()]
         [Route("api/Weather/F5Days")]
-        public string F5Days([FromBody()] int WidgetId)
+        public string F5Days([FromBody()] GetWeatherModel getWeatherModel)
         {
-            CreateWeatherRepo(WidgetId);
+            CreateWeatherRepo(getWeatherModel.WidgetId);
             var model = _weatherRepository.getF5Days();
             return model;
         }

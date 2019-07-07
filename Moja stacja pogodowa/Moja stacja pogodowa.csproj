@@ -296,6 +296,7 @@
     <Compile Include="Models\Weather\AW\Sun.cs" />
     <Compile Include="Models\Weather\AW\Temperature.cs" />
     <Compile Include="Models\Weather\AW\Wind.cs" />
+    <Compile Include="Models\Weather\GetWeatherModel.cs" />
     <Compile Include="Models\Weather\OWM\Clouds.cs" />
     <Compile Include="Models\Weather\OWM\ForecastModel.cs" />
     <Compile Include="Models\Weather\OWM\City.cs" />
