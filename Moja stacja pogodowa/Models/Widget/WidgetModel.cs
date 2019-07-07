@@ -14,5 +14,6 @@ namespace Moja_stacja_pogodowa.Models.Widget
         public string Lat { get; set; }
         public string Long { get; set; }
         public string CityId { get; set; }
+        public string Duration { get; set; }
     }
 }
