@@ -30,7 +30,8 @@ namespace Moja_stacja_pogodowa.Repositories
                 Name = x.Name,
                 Lat = x.Lat,
                 Long = x.Lon,
-                CityId = x.CityID
+                CityId = x.CityID,
+                Duration=x.Duration
             }).ToList();
             return result;
         }
@@ -44,7 +45,8 @@ namespace Moja_stacja_pogodowa.Repositories
                 Name = x.Name,
                 Lat = x.Lat,
                 Long = x.Lon,
-                CityId = x.CityID
+                CityId = x.CityID,
+                Duration = x.Duration
             }).FirstOrDefault();
             return result;
         }
@@ -58,7 +60,8 @@ namespace Moja_stacja_pogodowa.Repositories
                 Name = widgetModel.Name,
                 Lat = widgetModel.Lat,
                 Lon = widgetModel.Long,
-                CityID = widgetModel.CityId
+                CityID = widgetModel.CityId,
+                Duration = widgetModel.Duration
             };
             _db.UserWidgets.Add(widget);
             try
@@ -85,6 +88,7 @@ namespace Moja_stacja_pogodowa.Repositories
                 FromDb.Lat = widgetModel.Lat;
                 FromDb.Lon = widgetModel.Long;
                 FromDb.CityID = widgetModel.CityId;
+                FromDb.Duration = widgetModel.Duration;
             }
             try
             {

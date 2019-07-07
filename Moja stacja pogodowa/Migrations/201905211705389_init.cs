@@ -41,6 +41,7 @@ namespace Moja_stacja_pogodowa.Migrations
                     Lat = c.String(nullable: true, maxLength: 256),
                     Lon = c.String(nullable: true, maxLength: 256),
                     CityID = c.String(nullable: true, maxLength: 256),
+                    Duration = c.String(nullable: true, maxLength: 256),
                 })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)

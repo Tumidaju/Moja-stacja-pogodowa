@@ -41,19 +41,19 @@ namespace Moja_stacja_pogodowa.Repositories
         }
         public string getFToday()
         {
-            ForecastModel dataObject = new ForecastModel();
+            string dataObject = "";
             string urlParameters = string.Concat("weather?lat=", _latitude, "&lon=", _longtitude, "&lang=pl_pl&units=metric&appid=", _apiKey);
             HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
             if (response.IsSuccessStatusCode)
             {
-                //var dataObject = response.Content.ReadAsAsync<DayWeatherModel>().Result;
+                dataObject = response.Content.ReadAsStringAsync().Result;
             }
             else
             {
                 //error
             }
 
-            return JsonConvert.SerializeObject(dataObject);
+            return dataObject;
         }
         public string getF2Days()
         {

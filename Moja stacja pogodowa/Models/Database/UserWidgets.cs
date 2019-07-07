@@ -30,6 +30,9 @@ namespace Moja_stacja_pogodowa.Models.Database
         [StringLength(256)]
         public string CityID { get; set; }
 
+        [StringLength(256)]
+        public string Duration { get; set; }
+
         public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }
