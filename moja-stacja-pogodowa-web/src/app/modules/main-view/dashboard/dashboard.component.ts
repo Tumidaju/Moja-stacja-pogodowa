@@ -33,18 +33,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .getWidgetList(this.userId)
       .pipe(first())
       .subscribe(widgetArr => {
-        this.widgetArr = widgetArr;
+        // this.widgetArr = widgetArr;
         widgetArr.forEach(widget => {
-          this.fetchWeatherDataBaseOnDuration(widget.Id, widget.Duration);
+          this.fetchWeatherDataBaseOnDuration(
+            widget.Id,
+            widget.Duration,
+            widget.APIId
+          );
         });
       });
   }
-  fetchWeatherDataBaseOnDuration(widgetId: number, duration: string) {
+  fetchWeatherDataBaseOnDuration(
+    widgetId: number,
+    duration: string,
+    apiId: number
+  ) {
     this.weatherService
       .getWeather(widgetId, Number(duration))
       .pipe(first())
       .subscribe(data => {
-        console.log(data);
+
+        console.log(widgetId, JSON.parse(data));
       });
   }
   showUserInfo(): void {
