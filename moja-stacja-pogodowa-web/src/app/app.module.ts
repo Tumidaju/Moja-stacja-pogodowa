@@ -41,6 +41,8 @@ import { MaterialsModule } from './materials/materials.module';
 import { SharedService } from './services/shared.service';
 import { LoadingOverlayModule } from './shared/loading-overlay/loading-overlay.module';
 import { LoadingScreenModule } from './shared/loading-screen/loading-screen.module';
+import { WeatherService } from './modules/main-view/settings/services/weather.service';
+import { WidgetService } from './modules/main-view/settings/services/widget.service';
 
 library.add(
   faTimes,
@@ -85,7 +87,9 @@ library.add(
     AuthenticationService,
     AccountService,
     SharedService,
+    WeatherService,
     AuthGuard,
+    WidgetService,
     GuidGuard,
     AppConfig,
     PreloadSelectedModulesList,

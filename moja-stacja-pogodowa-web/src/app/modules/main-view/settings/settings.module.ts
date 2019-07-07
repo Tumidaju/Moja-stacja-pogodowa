@@ -64,6 +64,6 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     WidgetFormDialogComponent
   ],
   entryComponents: [WidgetFormDialogComponent],
-  providers: [ConfigService, WidgetService]
+  providers: [ConfigService]
 })
 export class SettingsModule {}
