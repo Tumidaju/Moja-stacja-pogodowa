@@ -46,26 +46,13 @@ export class WidgetFormDialogComponent implements OnInit {
     if (this.dialogForm.invalid) {
       return;
     }
-    const value = this.dialogForm.getRawValue();
-    let cityId: number | string;
-    console.log(this.dialogForm);
-    switch (value.APIId) {
-      case ApiTypes.openWeather:
-        cityId = (value.city as CityOpenWeather).id;
-        break;
-      case ApiTypes.accuWeather:
-        cityId = (value.city as CityAccuWeather).Key;
-        break;
-      case ApiTypes.weatherBit:
-        cityId = (value.city as CityWeatherBit).id;
-        break;
-    }
     this.loader = true;
-    const widget: WidgetApiModel = {
-      ...value,
-      userId: this.data.userId,
-      cityId: cityId.toString()
-    };
+    const value = this.dialogForm.getRawValue();
+    const widget = this.widgetService.createWidgetModelForApi(
+      value,
+      this.data.userId
+    );
+
     this.widgetService
       .createWidget(widget)
       .pipe(first())

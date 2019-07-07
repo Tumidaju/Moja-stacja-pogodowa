@@ -46,6 +46,7 @@ export class WidgetFormComponent implements OnInit {
 
   @Input() form: FormGroup;
   @Input() loader: boolean;
+  @Input() new = false;
   @Input() apis: Api[];
   @Input() openWeatherCities: CityOpenWeather[];
   @Input() accuWeatherCities: CityAccuWeather[];
@@ -69,7 +70,9 @@ export class WidgetFormComponent implements OnInit {
     this.form.controls.place.valueChanges.subscribe(data => {
       this.setPlaceValidators(data);
     });
-    this.setPlaceValidators(this.form.value.APIId);
+    if (this.new) {
+      this.setPlaceValidators(this.form.value.APIId);
+    }
   }
   resetOptions(value: any): Cities[] | string {
     return value ? value : [];

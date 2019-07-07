@@ -79,6 +79,11 @@ export class WidgetSettingsComponent implements OnInit {
     });
   }
   setWidgetGroup(widget: WidgetApi) {
+    const widgetGroup = this.createWidgetGroup(widget);
+    (this.widgetForm.controls.widgets as FormArray).push(widgetGroup);
+    widgetGroup.controls.name.setValidators(Validators.required);
+  }
+  createWidgetGroup(widget: WidgetApi): FormGroup {
     const widgetWithCityName = this.addCityNameToWidget(widget);
     const city = this.getCityByCityId(widget.APIId, Number(widget.CityId));
     const obj: any = {
@@ -93,9 +98,7 @@ export class WidgetSettingsComponent implements OnInit {
       duration: widgetWithCityName.Duration,
       city
     };
-    const widgetGroup = this.fb.group(obj);
-    (this.widgetForm.controls.widgets as FormArray).push(widgetGroup);
-    widgetGroup.controls.name.setValidators(Validators.required);
+    return this.fb.group(obj);
   }
   addCityNameToWidget(widget: WidgetApi): WidgetApiWithCity {
     const newWidget: WidgetApiWithCity = {
@@ -172,6 +175,44 @@ export class WidgetSettingsComponent implements OnInit {
   isWeatherBitCityData(citiesData: Cities): citiesData is CityWeatherBit[] {
     return (citiesData[0] as CityWeatherBit).city_name !== undefined;
   }
+  updateWidget(widgetValue: FormGroup): void {
+    if (widgetValue.invalid) {
+      return;
+    }
+    const widget = this.widgetService.createWidgetModelForApi(
+      widgetValue.value,
+      this.userId
+    );
+    const obj: any = {
+      ...widget,
+      id: widgetValue.value.id
+    };
+    this.widgetService
+      .updateWidget(obj)
+      .pipe(first())
+      .subscribe((data: any) => {
+        if (!data) {
+          return;
+        }
+        this.getWidgetList()
+          .pipe(first())
+          .subscribe(list => {
+            if (!list) {
+              return;
+            }
+            this.widgetArr = list;
+            const widgetDataToUpdate = this.widgetArr.find(
+              x => x.Id === widgetValue.value.id
+            );
+            this.updateWidgetData(widgetDataToUpdate, widgetValue);
+            // this.setWidgetGroup(lastWidget);
+          });
+      });
+  }
+  updateWidgetData(widgetData: WidgetApi, widget: FormGroup): void {
+    const widgetGroup = this.createWidgetGroup(widgetData);
+    widget.patchValue(widgetGroup);
+  }
   openWidgetDialog(): void {
     const dialogRef: MatDialogRef<WidgetFormDialogComponent> = this.dialog.open(
       WidgetFormDialogComponent,
@@ -196,6 +237,9 @@ export class WidgetSettingsComponent implements OnInit {
         this.getWidgetList()
           .pipe(first())
           .subscribe(list => {
+            if (!list) {
+              return;
+            }
             this.widgetArr = list;
             const lastWidget = this.widgetArr[this.widgetArr.length - 1];
             this.setWidgetGroup(lastWidget);
@@ -206,7 +250,10 @@ export class WidgetSettingsComponent implements OnInit {
     this.widgetService
       .deleteWidget(this.userId, widget.value.id)
       .pipe(first())
-      .subscribe(() => {
+      .subscribe((data: any) => {
+        if (!data) {
+          return;
+        }
         const widgets = this.widgetForm.controls.widgets as FormArray;
         const index = widgets.controls.findIndex(
           x => x.value.id === widget.value.id
