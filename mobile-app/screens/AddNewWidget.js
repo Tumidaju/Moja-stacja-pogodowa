@@ -18,6 +18,7 @@ import { Col, Row, Grid } from "react-native-easy-grid";
 import BaseNavigation from '../components/BaseNavigation';
 import TokenInfo from '../components/TokenInfo';
 import SettingProvider from '../components/SettingProvider'
+import RestHelper from '../components/RestHelper'
 
 class SignInScreen extends BaseNavigation {
     constructor(props) {
@@ -75,33 +76,42 @@ class SignInScreen extends BaseNavigation {
         }
     }
 
-    _getSelectedApiKey = async () => {
+    _getSelectedApiId = async () => {
         const settingProvider = new SettingProvider();
         const settings = await settingProvider.getSettingModel();
         if(this.state.AWKeyChecked) {
-            return settings.AWKey;
+            return 2;
         }
         if(this.state.OWMKeyChecked) {
-            return settings.OWMKey;
+            return 1;
         }
         if(this.state.WBKeyChecked) {
-            return settings.WBKey;
+            return 3;
         }
     }
 
     _addNew = async () => {
         const tokenInfo = new TokenInfo();
+        const restHelper = new RestHelper();
 
         const userId = await tokenInfo.getUserId();
-        const apiKey = await this._getSelectedApiKey();
-        debugger;
+        const apiId = await this._getSelectedApiId();
+        
         const newWigder = {
             UserId: userId,
             Name: this.state.name,
-            Lat: this.state.Lat,
-            Long: this.state.Long,
-            APIId: apiKey
+            Lat: this.state.lat,
+            Long: this.state.lon,
+            APIId: apiId
         }
+
+        const response = await restHelper.postWithToken("Widgets/CreateWidget", newWigder);
+
+        if(response) {
+            this.props.navigation.navigate('Widgets');
+            return;
+        }
+        Alert("Nie udało się dodac widżet, proszę sprawdzić wpisane dane");
     }
 
     render() {
@@ -144,15 +154,15 @@ class SignInScreen extends BaseNavigation {
                         <Col style={{alignItems: 'center',}}>
                             <Text>Rodzaj API dla widżeta</Text>
                             <CheckBox
-                                title='AW'
+                                title='AccuWeather API'
                                 checked={this.state.AWKeyChecked}
                                 onPress={() => this._selectApiType('AW')}/>
                             <CheckBox
-                                title='OWM'
+                                title='Open Weather Map API'
                                 checked={this.state.OWMKeyChecked}
                                 onPress={() => this._selectApiType('OWM')}/>
                             <CheckBox
-                                title='WB'
+                                title='Weatherbit API'
                                 checked={this.state.WBKeyChecked}
                                 onPress={() => this._selectApiType('WB')}/>
                         </Col>

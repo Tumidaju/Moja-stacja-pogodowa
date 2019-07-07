@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input } from 'react-native-elements';
+import { Input, ListItem, Avatar } from 'react-native-elements';
 import { Button } from 'react-native';
 import {
   Platform,
@@ -16,6 +16,9 @@ import Alert from '../components/Alert';
 import { Image } from 'react-native'
 import { Col, Row, Grid } from "react-native-easy-grid";
 import BaseNavigation from '../components/BaseNavigation';
+import TokenInfo from '../components/TokenInfo';
+import RestHelper from '../components/RestHelper';
+import { FlatList} from 'react-native'
 
 class Widgets extends BaseNavigation {
     constructor(props) {
@@ -24,11 +27,22 @@ class Widgets extends BaseNavigation {
     }
 
     state = {
-
+        widgets: [],
     };
 
     _bootstrapAsync = async () => {
+        const tokenInfo = new TokenInfo();
+        const restHelper = new RestHelper();
+
+        const userId = await tokenInfo.getUserId();
+
+        const widgets = await restHelper.postWithToken("Widgets/GetWidgets", {Id: userId});
+        this.setState({ widgets: widgets });
     };
+
+    _editWidget = (element) => {
+        console.log(element);
+    }
 
     _addNew = () => {
         this.props.navigation.navigate('NewWidget');
@@ -52,11 +66,35 @@ class Widgets extends BaseNavigation {
                                 }}/>
                             </Col>
                         </Row>
-                        <Row>
+                        <Row style={{alignItems: 'center'}}>
                             <Col style={{alignItems: 'center'}}>
                                 <Text>Zdefiniowane widżety</Text>
                             </Col>
                         </Row>
+                        {
+                            this.state.widgets.map((l, i) => (
+                                <View style={{marginTop: 10}}>
+                                    <Row key={i} style={{backgroundColor: "#68b78a", alignItems: 'center',}} onPress={() => this._editWidget(l)}>
+                                        <Col style={{alignItems: 'center'}}>
+                                            <Avatar
+                                                rounded
+                                                source={require('../assets/images/iconfinder_Thermometer_Hot_3741361.png')}/>
+                                        </Col>
+                                        <Col style={{marginLeft: 8, marginRight: 20}}>
+                                            <View>
+                                                <Text style={{width: 300}}>{l.Name}</Text>
+                                            </View>
+                                        </Col>
+                                        <Col>
+                                            <Avatar
+                                                rounded
+                                                source={require('../assets/images/right-arrow.png')}
+                                                size={24}/>
+                                        </Col>
+                                    </Row>
+                                </View>
+                            ))
+                        }
                     </Grid>
                 </ScrollView>
             </View>
