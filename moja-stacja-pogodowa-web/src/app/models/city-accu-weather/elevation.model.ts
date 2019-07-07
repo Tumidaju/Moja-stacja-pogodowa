@@ -1,8 +1,8 @@
-export class Elevation {
+export interface Elevation {
   Imperial: ElevationModel;
   Metric: ElevationModel;
 }
-export class ElevationModel {
+export interface ElevationModel {
   Value: number;
   Unit: string;
   UnitType: number;

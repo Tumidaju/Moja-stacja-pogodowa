@@ -15,8 +15,7 @@ import { WeatherApiKeys } from 'src/app/models/weather-api-keys.model';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit, OnDestroy {
   // userInfo: UserProfile;

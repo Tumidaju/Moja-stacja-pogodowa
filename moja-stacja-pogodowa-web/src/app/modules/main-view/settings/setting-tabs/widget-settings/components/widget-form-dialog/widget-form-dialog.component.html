@@ -1,0 +1,35 @@
+<div id="send-survey-container">
+  <div>
+    <div id="header">
+      <span mat-dialog-title>Dodawanie widgetu</span>
+    </div>
+    <div id="content-container" mat-dialog-content>
+      <app-widget-form
+        [apis]="data.apis"
+        [loader]="loader"
+        [form]="dialogForm"
+        [openWeatherCities]="data.openWeatherCities"
+        [accuWeatherCities]="data.accuWeatherCities"
+        [weatherBitCities]="data.weatherBitCities"
+        (submit)="onSubmit($event)"
+      ></app-widget-form>
+    </div>
+    <mat-dialog-actions>
+      <div id="button-container">
+        <button mat-flat-button type="button" mat-dialog-close>
+          Wróć
+        </button>
+        <button id="submit-button" mat-flat-button (click)="onSubmit()">
+          <div id="button">
+            <span>Dodaj</span>
+            <p-progressSpinner
+              [style]="{ width: '15px', height: '15px' }"
+              strokeWidth="8"
+              *ngIf="loader === true"
+            ></p-progressSpinner>
+          </div>
+        </button>
+      </div>
+    </mat-dialog-actions>
+  </div>
+</div>

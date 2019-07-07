@@ -1,0 +1,25 @@
+@import 'src/styles/colors.scss';
+
+#button-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
+  button {
+    margin: 0 5px;
+  }
+  #submit-button {
+    background-color: $primary;
+    color: white;
+    #button {
+      display: flex;
+      span {
+        margin-right: 5px;
+      }
+      p-progressSpinner {
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}

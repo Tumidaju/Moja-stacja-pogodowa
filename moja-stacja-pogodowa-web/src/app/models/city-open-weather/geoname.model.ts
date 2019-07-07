@@ -1,5 +1,5 @@
 
-export class Geoname {
+export interface Geoname {
   cl: string;
   code: string;
   parent: number;

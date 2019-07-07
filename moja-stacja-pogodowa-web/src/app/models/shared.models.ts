@@ -1,10 +1,10 @@
 // tslint:disable:max-classes-per-file
-export class DashboardName {
+export interface DashboardName {
   main: string;
   survey: string;
   users: string;
 }
-export class ConfirmDataDialog {
+export interface ConfirmDataDialog {
   dialogTitle: string;
   boldContent: string;
   boldWarn: boolean;

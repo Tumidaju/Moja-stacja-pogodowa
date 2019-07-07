@@ -1,3 +1,3 @@
-export class Lang {
+export interface Lang {
   [name: string]: string;
 }

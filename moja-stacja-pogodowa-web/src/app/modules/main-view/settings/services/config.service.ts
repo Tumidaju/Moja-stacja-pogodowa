@@ -1,3 +1,4 @@
+import { Cities } from 'src/app/models/city.type';
 import { WeatherApiKeys } from 'src/app/models/weather-api-keys.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -30,8 +31,8 @@ export class ConfigService {
       null
     );
   }
-  getCityList(apiId: number): Observable<any> {
-    return this.http.post<number>(
+  getCityList(apiId: number): Observable<Cities> {
+    return this.http.post<any>(
       this.config.apiUrlLong + 'widgets/getCityList',
       apiId
     );

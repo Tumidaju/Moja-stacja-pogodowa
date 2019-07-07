@@ -4,7 +4,7 @@ import { GeoPosition } from './geoposition.model';
 import { Region } from './region.model';
 import { TimeZone } from './timezone.model';
 
-export class CityAccuWeather {
+export interface CityAccuWeather {
   AdministrativeArea: AdministrativeArea;
   Country: Country;
   DataSets: DataSet[];
@@ -22,5 +22,6 @@ export class CityAccuWeather {
   Version: number;
 }
 
-export class DataSet {}
-export class SupplementalAdminArea {}
+// tslint:disable: no-empty-interface
+export interface DataSet {}
+export interface SupplementalAdminArea {}

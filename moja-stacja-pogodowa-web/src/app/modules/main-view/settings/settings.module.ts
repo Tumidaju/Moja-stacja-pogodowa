@@ -1,3 +1,4 @@
+import { WidgetService } from './services/widget.service';
 import { ConfigService } from './services/config.service';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -11,7 +12,10 @@ import {
   MatTableModule,
   MatListModule,
   MatMenuModule,
-  MatSelectModule
+  MatSelectModule,
+  MatDialogModule,
+  MatRadioModule,
+  MatAutocompleteModule
 } from '@angular/material';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProgressBarModule } from 'primeng/progressbar';
@@ -22,6 +26,9 @@ import { WidgetSettingsComponent } from './setting-tabs/widget-settings/widget-s
 import { KeysSettingsComponent } from './setting-tabs/keys-settings/keys-settings.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ListComponent } from './components/list/list.component';
+import { WidgetFormComponent } from './setting-tabs/widget-settings/components/widget-form/widget-form.component';
+import { WidgetFormDialogComponent } from './setting-tabs/widget-settings/components/widget-form-dialog/widget-form-dialog.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   imports: [
@@ -41,15 +48,22 @@ import { ListComponent } from './components/list/list.component';
     MatListModule,
     MatButtonModule,
     MatMenuModule,
-    MatSelectModule
+    MatSelectModule,
+    ProgressSpinnerModule,
+    MatDialogModule,
+    MatRadioModule,
+    MatAutocompleteModule
   ],
   declarations: [
     SettingsComponent,
     MainSettingsComponent,
     WidgetSettingsComponent,
     KeysSettingsComponent,
-    ListComponent
+    ListComponent,
+    WidgetFormComponent,
+    WidgetFormDialogComponent
   ],
-  providers: [ConfigService]
+  entryComponents: [WidgetFormDialogComponent],
+  providers: [ConfigService, WidgetService]
 })
 export class SettingsModule {}

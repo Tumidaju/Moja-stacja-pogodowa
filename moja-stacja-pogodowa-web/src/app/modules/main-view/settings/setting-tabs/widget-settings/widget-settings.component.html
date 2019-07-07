@@ -19,7 +19,7 @@
   <button mat-menu-item>Usuń</button>
 </mat-menu> -->
 
-<div id="container">
+<div id="container" *ngIf="widgetForm">
   <form [formGroup]="widgetForm">
     <!-- <pre>{{widgetForm.value | json }}</pre> -->
     <div id="register-container">
@@ -30,16 +30,16 @@
           >
             <mat-expansion-panel-header>
               <mat-panel-title>
-                Nazwa
+                {{ widget.value.name }}
               </mat-panel-title>
               <mat-panel-description>
                 <!-- {{ weatherApiKeys.OWMKey }} -->
               </mat-panel-description>
             </mat-expansion-panel-header>
             <ng-template matExpansionPanelContent>
-              <div class="fields">
+              <!-- <div class="fields">
                 <mat-form-field>
-                  <input matInput [formControl]="widget['controls'].name" />
+                  <input matInput [formControl]="widget['controls'].Name" />
                 </mat-form-field>
                 <mat-form-field>
                   <mat-label>Wybierz api</mat-label>
@@ -49,19 +49,16 @@
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
-              </div>
-
-              <div class="btnBox">
-                <button
-                  type="button"
-                  class="white"
-                  mat-raised-button
-                  color="primary"
-                  (click)="onSubmit()"
-                >
-                  Zapisz
-                </button>
-              </div>
+              </div> -->
+              <app-widget-form
+                [apis]="apis"
+                [loader]="loader"
+                [form]="widget"
+                [openWeatherCities]="openWeatherCities"
+                [accuWeatherCities]="accuWeatherCities"
+                [weatherBitCities]="weatherBitCities"
+                (submit)="onSubmit($event)"
+              ></app-widget-form>
             </ng-template>
           </mat-expansion-panel>
         </mat-accordion>
@@ -72,7 +69,12 @@
           class="white"
           mat-raised-button
           color="primary"
-          (click)="onSubmit()"
+          (click)="openWidgetDialog()"
+          [disabled]="
+            openWeatherCities === undefined ||
+            accuWeatherCities === undefined ||
+            weatherBitCities === undefined
+          "
         >
           Dodaj nowy widget
         </button>

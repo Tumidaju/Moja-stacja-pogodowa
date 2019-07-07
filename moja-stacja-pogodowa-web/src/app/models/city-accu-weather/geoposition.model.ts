@@ -1,6 +1,6 @@
 import { Elevation } from './elevation.model';
 
-export class GeoPosition {
+export interface GeoPosition {
   Elevation: Elevation;
   Latitude: number;
   Lingitude: number;

@@ -1,4 +1,4 @@
-export class AdministrativeArea {
+export interface AdministrativeArea {
   CountryID: string;
   EnglishName: string;
   EnglishType: string;

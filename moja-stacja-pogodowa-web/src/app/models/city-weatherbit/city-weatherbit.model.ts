@@ -1,5 +1,5 @@
 // tslint:disable: variable-name
-export class CityWeatherBit {
+export interface CityWeatherBit {
   city_name: string;
   country_code: string;
   country_name: string;

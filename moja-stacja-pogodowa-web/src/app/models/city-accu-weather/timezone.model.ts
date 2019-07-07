@@ -1,5 +1,5 @@
 
-export class TimeZone {
+export interface TimeZone {
   Code: string;
   GmtOffset: number;
   IsDaylightSaving: boolean;

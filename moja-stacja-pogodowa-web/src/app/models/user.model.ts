@@ -13,7 +13,7 @@ export class User {
   }
 }
 
-export class RegisteredUser extends User {
+export interface RegisteredUser extends User {
   albumID: number;
   profileName: string;
   password: string;
