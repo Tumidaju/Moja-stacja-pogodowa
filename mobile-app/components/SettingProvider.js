@@ -20,6 +20,14 @@ class SettingProvider {
 
         return config != null && config.url != null && config.apiSuffix != null && config.url != "" && config.apiSuffix != "";
     }
+
+    async getSettingModel() {
+        const jsonConfig = await AsyncStorage.getItem('config');
+        if(jsonConfig == null)
+            return null;
+        
+        return JSON.parse(jsonConfig);
+    }
 }
 
 export default SettingProvider

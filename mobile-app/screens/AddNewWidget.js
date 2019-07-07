@@ -1,5 +1,5 @@
 import React from 'react';
-import { Input } from 'react-native-elements';
+import { Input, CheckBox, Overlay } from 'react-native-elements';
 import { Button } from 'react-native';
 import {
   Platform,
@@ -14,7 +14,10 @@ import {
 import AutenticationHelper from '../components/AutenticationHelper';
 import Alert from '../components/Alert';
 import { Image } from 'react-native'
+import { Col, Row, Grid } from "react-native-easy-grid";
 import BaseNavigation from '../components/BaseNavigation';
+import TokenInfo from '../components/TokenInfo';
+import SettingProvider from '../components/SettingProvider'
 
 class SignInScreen extends BaseNavigation {
     constructor(props) {
@@ -23,12 +26,83 @@ class SignInScreen extends BaseNavigation {
     }
 
     state = {
-
+        name: '',
+        lat: '',
+        lon: '',
+        OWMKeyChecked: false,
+        AWKeyChecked: false,
+        WBKeyChecked: false,
+        isGetLocationPopupVisible: false,
     };
 
     _bootstrapAsync = async () => {
         
     };
+
+    _latChanged = text => {
+        this.setState({ lat: text });
+    };
+    
+    _nameChanged = text => {
+        this.setState({ name: text });
+    };
+
+    _lonChanged = text => {
+        this.setState({ lon: text });
+    };
+
+    _findCurrentLocation = () => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            debugger;
+            this.setState({ lon: position.coords.longitude, lat: position.coords.latitude });
+        }, (error) => {
+            Alert(JSON.stringify(error))
+        }, {
+            enableHighAccuracy: true,
+            timeout: 20000,
+            maximumAge: 1000
+        });
+    };
+
+    _selectApiType = (type) => {
+        if(type == "AW") {
+            this.setState({ AWKeyChecked: !this.state.AWKeyChecked, OWMKeyChecked: false, WBKeyChecked: false});
+        }
+        if(type == "OWM") {
+            this.setState({ OWMKeyChecked: !this.state.OWMKeyChecked, AWKeyChecked: false, WBKeyChecked: false});
+        }
+        if(type == "WB") {
+            this.setState({ WBKeyChecked: !this.state.WBKeyChecked, OWMKeyChecked: false, AWKeyChecked: false});
+        }
+    }
+
+    _getSelectedApiKey = async () => {
+        const settingProvider = new SettingProvider();
+        const settings = await settingProvider.getSettingModel();
+        if(this.state.AWKeyChecked) {
+            return settings.AWKey;
+        }
+        if(this.state.OWMKeyChecked) {
+            return settings.OWMKey;
+        }
+        if(this.state.WBKeyChecked) {
+            return settings.WBKey;
+        }
+    }
+
+    _addNew = async () => {
+        const tokenInfo = new TokenInfo();
+
+        const userInfo = await tokenInfo.getFullUserInfo();
+        const apiKey = await this._getSelectedApiKey();
+        debugger;
+        const newWigder = {
+            UserId: userInfo.UserId,
+            Name: this.state.name,
+            Lat: this.state.Lat,
+            Long: this.state.Long
+        }
+    }
 
     render() {
         return (
@@ -36,9 +110,65 @@ class SignInScreen extends BaseNavigation {
                 <ScrollView
                     style={styles.container}
                     contentContainerStyle={styles.contentContainer}>
-                <View style={styles.getStartedContainer}>
-                    <Text>Wpisz dane dotycząc miasta</Text>
-                </View>
+                <Grid>
+                    <Row>
+                        <Col style={{alignItems: 'center',}}>
+                            <Text>Wpisz dane:</Text>
+                        </Col>
+                    </Row>
+                    <Row style={{alignItems: 'center',}}>
+                        <Col style={{alignItems: 'center',}}>
+                            <Input placeholder='Nazwa'
+                                onChangeText={this._nameChanged} 
+                                editable={true} 
+                                value={this.state.name}/>
+                            <Input placeholder='Lat'
+                                onChangeText={this._latChanged} 
+                                editable={true} 
+                                value={this.state.lat}/>
+                            <Input placeholder='Lon' 
+                                onChangeText={this._lonChanged} 
+                                editable={true} 
+                                value={this.state.lon}/>
+                            <Button onPress={this._addNew}
+                                title="Pobierz bierzącą lokalizacje..."
+                                color="#68b78a"
+                                style={{
+                                    marginTop: 75,
+                                    alignItems: 'center'
+                                }}
+                                onPress={this._findCurrentLocation}/>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col style={{alignItems: 'center',}}>
+                            <Text>Rodzaj API dla widżeta</Text>
+                            <CheckBox
+                                title='AW'
+                                checked={this.state.AWKeyChecked}
+                                onPress={() => this._selectApiType('AW')}/>
+                            <CheckBox
+                                title='OWM'
+                                checked={this.state.OWMKeyChecked}
+                                onPress={() => this._selectApiType('OWM')}/>
+                            <CheckBox
+                                title='WB'
+                                checked={this.state.WBKeyChecked}
+                                onPress={() => this._selectApiType('WB')}/>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col style={{alignItems: 'center',}}>
+                            <Button onPress={this._addNew}
+                                title="Dodaj"
+                                color="#68b78a"
+                                style={{
+                                    marginTop: 75,
+                                    alignItems: 'center'
+                                }}/>
+                        </Col>
+                    </Row>
+                </Grid>
                 
                 </ScrollView>
             </View>

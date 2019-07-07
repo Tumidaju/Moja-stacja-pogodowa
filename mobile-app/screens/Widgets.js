@@ -28,7 +28,6 @@ class Widgets extends BaseNavigation {
     };
 
     _bootstrapAsync = async () => {
-        
     };
 
     _addNew = () => {

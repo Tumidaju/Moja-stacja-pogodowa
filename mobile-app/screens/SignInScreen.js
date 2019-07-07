@@ -17,6 +17,13 @@ import { Image } from 'react-native'
 import { Col, Row, Grid } from "react-native-easy-grid";
 
 class SignInScreen extends React.Component {
+    static navigationOptions = ({ navigation }) => {
+        return {
+            headerTitle: 'Pogoda',
+            headerTitleStyle: { marginLeft: 20 },
+          };
+    };
+
     constructor(props) {
         super(props);
         this._bootstrapAsync();

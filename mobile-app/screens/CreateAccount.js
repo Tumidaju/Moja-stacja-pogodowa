@@ -70,7 +70,6 @@ class CreateAccount extends React.Component {
     }
 
     _backToLogin = () => {
-        debugger;
         this.props.navigation.navigate('Auth');
     }
 

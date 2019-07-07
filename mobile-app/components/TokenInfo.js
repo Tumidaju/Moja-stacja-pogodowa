@@ -20,6 +20,14 @@ class TokenInfo {
         const info = JSON.parse(tokenInfo);
         return info;
     }
+
+    async getUserId() {
+        const config = await this.getFullUserInfo();
+        if(config == null)
+            return null;
+        
+        return config.userID;
+    }
 }
 
 export default TokenInfo;
