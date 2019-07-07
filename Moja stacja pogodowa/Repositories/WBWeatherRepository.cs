@@ -43,8 +43,8 @@ namespace Moja_stacja_pogodowa.Repositories
         {
             string dataObject = "";
             string urlParameters = string.Concat("current?lat=", _latitude, "&lon=", _longtitude, "&lang=pl&units=M&key=", _apiKey);
-            if (_cityId != "")
-                urlParameters = string.Concat("weather?city_id=", _cityId, "&lang=pl&units=M&key=", _apiKey);
+            if (_cityId != null)
+                urlParameters = string.Concat("current?city_id=", _cityId, "&lang=pl&units=M&key=", _apiKey);
             HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -61,7 +61,7 @@ namespace Moja_stacja_pogodowa.Repositories
         {
             string dataObject = "";
             string urlParameters = string.Concat("forecast/hourly?lat=", _latitude, "&lon=", _longtitude, "&lang=pl&units=M&key=", _apiKey);
-            if (_cityId != "")
+            if (_cityId != null)
                 urlParameters = string.Concat("forecast/hourly?city_id=", _cityId, "&lang=pl&units=M&key=", _apiKey);
             HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
             if (response.IsSuccessStatusCode)
@@ -78,7 +78,7 @@ namespace Moja_stacja_pogodowa.Repositories
         {
             string dataObject = "";
             string urlParameters = string.Concat("forecast/daily?lat=", _latitude, "&lon=", _longtitude, "&lang=pl&units=M&days=5&key=", _apiKey);
-            if (_cityId != "")
+            if (_cityId != null)
                 urlParameters = string.Concat("forecast/daily?city_id=", _cityId, "&lang=pl&units=M&days=5&key=", _apiKey);
             HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
             if (response.IsSuccessStatusCode)

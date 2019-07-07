@@ -33,7 +33,7 @@ namespace Moja_stacja_pogodowa.Repositories
             };
             _client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
-            if (_latitude!="")
+            if (_latitude!=null)
             {
                 string urlLocationParameters = string.Concat("locations/v1/cities/geoposition/search?q=", _latitude, ",", _longtitude, "&language=pl-pl&apikey=", _apiKey);
                 HttpResponseMessage LocationResponse = _client.GetAsync(urlLocationParameters).Result;
