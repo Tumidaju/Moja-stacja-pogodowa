@@ -53,7 +53,6 @@ class SignInScreen extends BaseNavigation {
 
     _findCurrentLocation = () => {
         navigator.geolocation.getCurrentPosition((position) => {
-            debugger;
             this.setState({ lon: position.coords.longitude, lat: position.coords.latitude });
         }, (error) => {
             Alert(JSON.stringify(error))
@@ -93,14 +92,15 @@ class SignInScreen extends BaseNavigation {
     _addNew = async () => {
         const tokenInfo = new TokenInfo();
 
-        const userInfo = await tokenInfo.getFullUserInfo();
+        const userId = await tokenInfo.getUserId();
         const apiKey = await this._getSelectedApiKey();
         debugger;
         const newWigder = {
-            UserId: userInfo.UserId,
+            UserId: userId,
             Name: this.state.name,
             Lat: this.state.Lat,
-            Long: this.state.Long
+            Long: this.state.Long,
+            APIId: apiKey
         }
     }
 
