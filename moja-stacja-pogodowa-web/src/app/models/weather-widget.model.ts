@@ -1,5 +1,5 @@
 export interface WeatherWidget {
-  icon: string;
+  icon?: string;
   temp: number;
   description: string;
   city: string;

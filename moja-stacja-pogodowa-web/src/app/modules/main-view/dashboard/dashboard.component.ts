@@ -1,3 +1,8 @@
+import { WeatherWeatherBit } from './../../../models/city-weatherbit/weather-weatherbit.model';
+import { WeatherAccuWeather } from './../../../models/city-accu-weather/weather-accu-weather.model';
+import { WeatherOpenWeather } from './../../../models/city-open-weather/weather-open-weather.model';
+import { WeatherWidget } from './../../../models/weather-widget.model';
+import { ApiTypes } from 'src/app/enums/api.enum';
 import { WidgetService } from './../settings/services/widget.service';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
@@ -16,7 +21,8 @@ import { Duration } from 'src/app/enums/duration.enum';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   userId: number;
-  widgetArr: WidgetApi[] = [];
+  widgetArr: WeatherWidget[][] = [];
+
   constructor(
     private sharedService: SharedService,
     private widgetService: WidgetService,
@@ -52,10 +58,48 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .getWeather(widgetId, Number(duration))
       .pipe(first())
       .subscribe(data => {
-
-        console.log(widgetId, JSON.parse(data));
+        const widgetData =
+          data && typeof data === 'string' ? JSON.parse(data) : data;
+        console.log(widgetId, widgetData);
+        this.setWeatherWidgetData(widgetData, apiId);
       });
   }
+  setWeatherWidgetData(data: any, apiId: number) {
+    let weatherWidget: WeatherWidget[];
+    switch (apiId) {
+      case ApiTypes.openWeather:
+        weatherWidget = this.setOpenWeatherWidget(data as WeatherOpenWeather);
+        break;
+      case ApiTypes.accuWeather:
+        this.setAccuWeatherWidget(data as WeatherAccuWeather);
+        break;
+      case ApiTypes.weatherBit:
+        this.setWeatherBitWidget(data as WeatherWeatherBit);
+        break;
+    }
+    this.widgetArr.push(weatherWidget);
+  }
+
+  setOpenWeatherWidget(data: WeatherOpenWeather) {
+    const weatherWidgetArr: WeatherWidget[] = [];
+    if (!data.weather) {
+      return;
+    }
+    data.weather.forEach(weather => {
+      const obj: WeatherWidget = {
+        temp: data.main.temp,
+        description: weather.description,
+        city: data.name,
+        wind: data.wind.speed,
+        humidity: data.main.humidity,
+        date: Date.now()
+      };
+      weatherWidgetArr.push(obj);
+    });
+    return weatherWidgetArr;
+  }
+  setAccuWeatherWidget(data: WeatherAccuWeather) {}
+  setWeatherBitWidget(data: WeatherWeatherBit) {}
   showUserInfo(): void {
     this.sharedService.showUser(true);
   }
