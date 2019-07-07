@@ -13,36 +13,22 @@ import {
 } from 'react-native';
 import AutenticationHelper from '../components/AutenticationHelper';
 import Alert from '../components/Alert';
-import WeatherService from '../components/WeatherService'
-import { Col, Row, Grid } from "react-native-easy-grid";
+import { Image } from 'react-native'
 import BaseNavigation from '../components/BaseNavigation';
 
-class HomeScreen extends BaseNavigation {
+class SignInScreen extends BaseNavigation {
     constructor(props) {
         super(props);
         this._bootstrapAsync();
     }
 
     state = {
-        today: '',
+
     };
 
     _bootstrapAsync = async () => {
-        const weatherService = new WeatherService();
-        const today = await weatherService.today();
-        this.setState({
-            today: today
-        });
+        
     };
-
-    _logOut = async () => {
-        AsyncStorage.removeItem('userToken');
-        this.props.navigation.navigate('Auth');
-    };
-
-    _toSetting = () => {
-        this.props.navigation.navigate('Config');
-    }
 
     render() {
         return (
@@ -51,10 +37,9 @@ class HomeScreen extends BaseNavigation {
                     style={styles.container}
                     contentContainerStyle={styles.contentContainer}>
                 <View style={styles.getStartedContainer}>
-                    <Text>Kraków</Text>
-                    <Text>Temperatura dziś: {this.state.today.temperature}</Text>
-                    <Text>Prędkość wiatru: {this.state.today.windSpeed}</Text>
+                    <Text>Wpisz dane dotycząc miasta</Text>
                 </View>
+                
                 </ScrollView>
             </View>
         );
@@ -62,12 +47,21 @@ class HomeScreen extends BaseNavigation {
 }
 
 
-export default HomeScreen
+export default SignInScreen
 
 const styles = StyleSheet.create({
+    buttonsContainer: {
+        flex: 1,
+        flexDirection: 'row'
+    },
+    dataSection: {
+        marginTop: 25,
+        width: 500,
+    },
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    flexDirection: 'column',
   },
   developmentModeText: {
     marginBottom: 20,
@@ -153,7 +147,19 @@ const styles = StyleSheet.create({
   },
 
   logInButtonStyle: {
-    marginTop: 75,
-    alignItems: 'center'
+    marginTop: 25,
+    justifyContent: 'flex-start',
+    marginRight: 10,
+  },
+
+  createButtonStyle: {
+    marginTop: 25,
+    justifyContent: 'flex-end',
+    marginLeft: 10,
+  },
+
+  mainTitle: {
+    marginTop: 20,
+    fontSize: 20
   }
 });

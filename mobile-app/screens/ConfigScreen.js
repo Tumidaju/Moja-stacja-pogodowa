@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   AsyncStorage,
   StatusBar,
+  YellowBox
 } from 'react-native';
 import AutenticationHelper from '../components/AutenticationHelper';
 import Alert from '../components/Alert';
@@ -17,17 +18,17 @@ import WeatherService from '../components/WeatherService'
 import SettingProvider from '../components/SettingProvider'
 import axios from "axios";
 import TokenInfo from '../components/TokenInfo';
-import RestHelper from '../components/RestHelper'
+import RestHelper from '../components/RestHelper';
+import ModalDropdown from '../components/ModalDropdown';
+import BaseNavigation from '../components/BaseNavigation';
 
-class ConfigScreen extends React.Component {
+class ConfigScreen extends BaseNavigation {
     constructor(props) {
         super(props);
         this._bootstrapAsync();
     }
 
     state = {
-        url: '',
-        apiSuffix: '',
         OWMKey: '',
         AWKey: '',
         WBKey: '',
@@ -55,11 +56,7 @@ class ConfigScreen extends React.Component {
             return;
 
         const sp = new SettingProvider();
-        const baseUrl = await sp.getBaseUrl();
-        const suffixApi = await sp.getSuffixApi();
         this.setState({
-            url: baseUrl,
-            apiSuffix: suffixApi,
             OWMKey: config.OWMKey,
             AWKey: config.AWKey,
             WBKey: config.WBKey,
@@ -97,13 +94,7 @@ class ConfigScreen extends React.Component {
         return false;
     }
 
-    _urlChanged = text => {
-        this.setState({ url: text });
-    };
-
-    _apiSuffixChanged = text => {
-        this.setState({ apiSuffix: text });
-    };
+    
 
     _OWMKeyChanged = text => {
       this.setState({ OWMKey: text });
@@ -119,7 +110,10 @@ class ConfigScreen extends React.Component {
 
     async _ping() {
         try {
-            let data = await axios.post(this.state.url + this.state.apiSuffix + "Config/IsValid");
+            const sp = new SettingProvider();
+            const url = await sp.getBaseUrl();
+            const apiSuffix = await sp.getSuffixApi();
+            let data = await axios.post(url + apiSuffix + "Config/IsValid");
             return data != null;
         } catch (error) {
             return false;
@@ -133,17 +127,7 @@ class ConfigScreen extends React.Component {
                     style={styles.container}
                     contentContainerStyle={styles.contentContainer}>
                 <View style={styles.getStartedContainer}>
-                    <Text>Ustawienia (dla konfiguracji URL zawsze dodawaj '/' na końcu)</Text>
-
-                    <Input placeholder='Bazowy url do aplikacji webowej' 
-                            onChangeText={this._urlChanged} 
-                            editable={true} 
-                            value={this.state.url}/>
-
-                    <Input placeholder='Suffix do api (zwykłe /api)' 
-                            onChangeText={this._apiSuffixChanged} 
-                            editable={true} 
-                            value={this.state.apiSuffix}/>
+                    <Text>Ustawienia użytkownika</Text>
 
                     <Input placeholder='OWMKey' 
                             onChangeText={this._OWMKeyChanged} 
@@ -161,11 +145,12 @@ class ConfigScreen extends React.Component {
                             value={this.state.WBKey}/>
 
 
-                    <View style={styles.getStartedContainer}>
-                        <Button onPress={this._save}
-                            title="Zapisz zmiany"
-                            color="#841584"
-                            style={styles.logInButtonStyle}/>
+                    <View style={styles.buttonsContainer}>
+                        <View style={styles.logInButtonStyle}>
+                            <Button onPress={this._save}
+                                title="Zapisz zmiany"
+                                color="#68b78a"/>
+                        </View>
                     </View>
                 </View>
                 </ScrollView>
@@ -181,6 +166,29 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  menuContent: {
+    color: "#000",
+    padding: 2,
+    fontSize: 20,
+    backgroundColor: '#68b78a',
+    height:35,
+    justifyContent: 'center',
+    fontWeight: '500',
+    textTransform: 'uppercase'
+  },
+  menuOptions: {
+    backgroundColor: '#68b78a',
+  },
+  headerText: {
+    fontSize: 20,
+    margin: 10,
+    color: "#fff",
+    backgroundColor: '#68b78a',
+  },
+  buttonsContainer: {
+    flex: 1,
+    flexDirection: 'row'
   },
   developmentModeText: {
     marginBottom: 20,
@@ -268,5 +276,5 @@ const styles = StyleSheet.create({
   logInButtonStyle: {
     marginTop: 75,
     alignItems: 'center'
-  }
+  },
 });

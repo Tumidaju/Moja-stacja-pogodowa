@@ -13,35 +13,26 @@ import {
 } from 'react-native';
 import AutenticationHelper from '../components/AutenticationHelper';
 import Alert from '../components/Alert';
-import WeatherService from '../components/WeatherService'
+import { Image } from 'react-native'
 import { Col, Row, Grid } from "react-native-easy-grid";
 import BaseNavigation from '../components/BaseNavigation';
 
-class HomeScreen extends BaseNavigation {
+class Widgets extends BaseNavigation {
     constructor(props) {
         super(props);
         this._bootstrapAsync();
     }
 
     state = {
-        today: '',
+
     };
 
     _bootstrapAsync = async () => {
-        const weatherService = new WeatherService();
-        const today = await weatherService.today();
-        this.setState({
-            today: today
-        });
+        
     };
 
-    _logOut = async () => {
-        AsyncStorage.removeItem('userToken');
-        this.props.navigation.navigate('Auth');
-    };
-
-    _toSetting = () => {
-        this.props.navigation.navigate('Config');
+    _addNew = () => {
+        this.props.navigation.navigate('NewWidget');
     }
 
     render() {
@@ -50,11 +41,24 @@ class HomeScreen extends BaseNavigation {
                 <ScrollView
                     style={styles.container}
                     contentContainerStyle={styles.contentContainer}>
-                <View style={styles.getStartedContainer}>
-                    <Text>Kraków</Text>
-                    <Text>Temperatura dziś: {this.state.today.temperature}</Text>
-                    <Text>Prędkość wiatru: {this.state.today.windSpeed}</Text>
-                </View>
+                    <Grid>
+                        <Row>
+                            <Col style={{alignItems: 'center'}}>
+                                <Button onPress={this._addNew}
+                                title="Dodaj widget pogodowy"
+                                color="#68b78a"
+                                style={{
+                                    marginTop: 75,
+                                    alignItems: 'center'
+                                }}/>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col style={{alignItems: 'center'}}>
+                                <Text>Zdefiniowane widżety</Text>
+                            </Col>
+                        </Row>
+                    </Grid>
                 </ScrollView>
             </View>
         );
@@ -62,12 +66,21 @@ class HomeScreen extends BaseNavigation {
 }
 
 
-export default HomeScreen
+export default Widgets
 
 const styles = StyleSheet.create({
+    buttonsContainer: {
+        flex: 1,
+        flexDirection: 'row'
+    },
+    dataSection: {
+        marginTop: 25,
+        width: 500,
+    },
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    flexDirection: 'column',
   },
   developmentModeText: {
     marginBottom: 20,
@@ -153,7 +166,19 @@ const styles = StyleSheet.create({
   },
 
   logInButtonStyle: {
-    marginTop: 75,
-    alignItems: 'center'
+    marginTop: 25,
+    justifyContent: 'flex-start',
+    marginRight: 10,
+  },
+
+  createButtonStyle: {
+    marginTop: 25,
+    justifyContent: 'flex-end',
+    marginLeft: 10,
+  },
+
+  mainTitle: {
+    marginTop: 20,
+    fontSize: 20
   }
 });
