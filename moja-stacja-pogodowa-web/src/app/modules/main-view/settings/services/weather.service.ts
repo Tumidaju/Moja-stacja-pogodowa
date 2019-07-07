@@ -21,6 +21,8 @@ export class WeatherService {
         str = 'F5Days';
         break;
     }
-    return this.http.post(this.config.apiUrlLong + 'Weather/' + str, widgetId);
+    return this.http.post(this.config.apiUrlLong + 'Weather/' + str, {
+      widgetId
+    });
   }
 }
