@@ -20,7 +20,7 @@ class AuthLoadingScreen extends React.Component {
         const tokenInfo = new TokenInfo();
 
         const userToken = await tokenInfo.getCurrentToken();
-
+        
         this.props.navigation.navigate(userToken ? 'App' : 'Auth');
     };
 

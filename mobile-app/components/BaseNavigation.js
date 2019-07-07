@@ -18,7 +18,7 @@ import ModalDropdown from '../components/ModalDropdown';
 class BaseNavigation extends React.Component {
     static configActions = [
         'API', 
-        'Widżetów',
+        'Widżety',
         'Wyloguj się',
     ];
 

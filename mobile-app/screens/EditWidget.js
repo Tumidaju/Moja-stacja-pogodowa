@@ -20,7 +20,7 @@ import TokenInfo from '../components/TokenInfo';
 import SettingProvider from '../components/SettingProvider'
 import RestHelper from '../components/RestHelper'
 
-class AddNewWidget extends BaseNavigation {
+class EditWidget extends BaseNavigation {
     constructor(props) {
         super(props);
         this._bootstrapAsync();
@@ -34,11 +34,40 @@ class AddNewWidget extends BaseNavigation {
         AWKeyChecked: false,
         WBKeyChecked: false,
         isGetLocationPopupVisible: false,
+        id: 0,
     };
 
     _bootstrapAsync = async () => {
+        const widgetJson = await AsyncStorage.getItem("CurrentEditWidget");
+        const widget = JSON.parse(widgetJson);
         
+        this._predefineEditedWidgetState(widget);
     };
+
+    _predefineEditedWidgetState = (widget) => {
+        this.setState({
+            name: widget.Name,
+            lat: widget.Lat,
+            lon: widget.Long,
+            id: widget.Id,
+        })
+
+        if(widget.APIId == 1) {
+            this.setState({
+                OWMKeyChecked: true,
+            })
+        }
+        if(widget.APIId == 2) {
+            this.setState({
+                AWKeyChecked: true,
+            })
+        }
+        if(widget.APIId == 3) {
+            this.setState({
+                WBKeyChecked: true,
+            })
+        }
+    }
 
     _latChanged = text => {
         this.setState({ lat: text });
@@ -77,8 +106,6 @@ class AddNewWidget extends BaseNavigation {
     }
 
     _getSelectedApiId = async () => {
-        const settingProvider = new SettingProvider();
-        const settings = await settingProvider.getSettingModel();
         if(this.state.AWKeyChecked) {
             return 2;
         }
@@ -90,28 +117,29 @@ class AddNewWidget extends BaseNavigation {
         }
     }
 
-    _addNew = async () => {
+    _update = async () => {
         const tokenInfo = new TokenInfo();
         const restHelper = new RestHelper();
 
         const userId = await tokenInfo.getUserId();
         const apiId = await this._getSelectedApiId();
         
-        const newWigder = {
+        const editedWidget = {
             UserId: userId,
             Name: this.state.name,
             Lat: this.state.lat,
             Long: this.state.lon,
-            APIId: apiId
+            APIId: apiId,
+            Id: this.state.id
         }
 
-        const response = await restHelper.postWithToken("Widgets/CreateWidget", newWigder);
+        const response = await restHelper.postWithToken("Widgets/UpdateWidget", editedWidget);
 
         if(response) {
             this.props.navigation.navigate('Widgets');
             return;
         }
-        Alert("Nie udało się dodac widżet, proszę sprawdzić wpisane dane");
+        Alert("Nie udało się zmienić widżet, proszę sprawdzić wpisane dane");
     }
 
     render() {
@@ -169,8 +197,8 @@ class AddNewWidget extends BaseNavigation {
                     </Row>
                     <Row>
                         <Col style={{alignItems: 'center',}}>
-                            <Button onPress={this._addNew}
-                                title="Dodaj"
+                            <Button onPress={this._update}
+                                title="Zapisz"
                                 color="#68b78a"
                                 style={{
                                     marginTop: 75,
@@ -187,7 +215,7 @@ class AddNewWidget extends BaseNavigation {
 }
 
 
-export default AddNewWidget
+export default EditWidget
 
 const styles = StyleSheet.create({
     buttonsContainer: {

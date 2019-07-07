@@ -40,8 +40,9 @@ class Widgets extends BaseNavigation {
         this.setState({ widgets: widgets });
     };
 
-    _editWidget = (element) => {
-        console.log(element);
+    _editWidget = async (element) => {
+        await AsyncStorage.setItem("CurrentEditWidget", JSON.stringify(element));
+        this.props.navigation.navigate("EditWidget"); 
     }
 
     _addNew = () => {
