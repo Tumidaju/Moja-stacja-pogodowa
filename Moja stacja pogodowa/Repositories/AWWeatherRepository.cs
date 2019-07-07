@@ -33,13 +33,21 @@ namespace Moja_stacja_pogodowa.Repositories
             };
             _client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
-            string urlLocationParameters = string.Concat("locations/v1/cities/geoposition/search?q=", _latitude, ",", _longtitude, "&language=pl-pl&apikey=", _apiKey);
-            HttpResponseMessage LocationResponse = _client.GetAsync(urlLocationParameters).Result;
-            if (LocationResponse.IsSuccessStatusCode)
+            if (_latitude!="")
             {
-                var LocationObject = LocationResponse.Content.ReadAsAsync<LocationModel>().Result;
-                _locationKey = LocationObject.Key;
+                string urlLocationParameters = string.Concat("locations/v1/cities/geoposition/search?q=", _latitude, ",", _longtitude, "&language=pl-pl&apikey=", _apiKey);
+                HttpResponseMessage LocationResponse = _client.GetAsync(urlLocationParameters).Result;
+                if (LocationResponse.IsSuccessStatusCode)
+                {
+                    var LocationObject = LocationResponse.Content.ReadAsAsync<LocationModel>().Result;
+                    _locationKey = LocationObject.Key;
+                }
             }
+            else
+            {
+                _locationKey = _cityId;
+            }
+           
 
         }
         public string getFToday()
@@ -47,7 +55,7 @@ namespace Moja_stacja_pogodowa.Repositories
             ForecastModel dataObject = new ForecastModel();
             if (_locationKey!="")
             {
-                string urlParameters = string.Concat("forecasts/v1/daily/1day/", _locationKey, "?lat=", _latitude, "&lon=", _longtitude, "&language=pl-pl&metric=true&details=true&apikey=", _apiKey);
+                string urlParameters = string.Concat("forecasts/v1/daily/1day/", _locationKey, "?language=pl-pl&metric=true&details=true&apikey=", _apiKey);
                 HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -69,7 +77,7 @@ namespace Moja_stacja_pogodowa.Repositories
             ForecastModel dataObject = new ForecastModel();
             if (_locationKey != "")
             {
-                string urlParameters = string.Concat("forecast/hourly?lat=", _latitude, "&lon=", _longtitude, "&language=pl-pl&metric=true&details=true&apikey=", _apiKey);
+                string urlParameters = string.Concat("forecast/hourly/", _locationKey, "?language=pl-pl&metric=true&details=true&apikey=", _apiKey);
                 HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -91,7 +99,7 @@ namespace Moja_stacja_pogodowa.Repositories
             ForecastModel dataObject = new ForecastModel();
             if (_locationKey != "")
             {
-                string urlParameters = string.Concat("forecasts/v1/daily/5day/", _locationKey, "?lat=", _latitude, "&lon=", _longtitude, "&language=pl-pl&metric=true&details=true&apikey=", _apiKey);
+                string urlParameters = string.Concat("forecasts/v1/daily/5day/", _locationKey, "?language=pl-pl&metric=true&details=true&apikey=", _apiKey);
                 HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
                 if (response.IsSuccessStatusCode)
                 {
