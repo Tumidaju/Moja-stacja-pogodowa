@@ -40,54 +40,55 @@ namespace Moja_stacja_pogodowa.Repositories
         }
         public string getFToday()
         {
-            DayWeatherModel dataObject = new DayWeatherModel();
+            string dataObject = "";
             string urlParameters = string.Concat("weather?lat=", _latitude, "&lon=", _longtitude, "&lang=pl_pl&units=metric&appid=", _apiKey);
             if(_cityId!= null)
                 urlParameters = string.Concat("weather?id=", _cityId, "&lang=pl_pl&units=metric&appid=", _apiKey);
             HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
             if (response.IsSuccessStatusCode)
             {
-                dataObject = response.Content.ReadAsAsync<DayWeatherModel>().Result;  
+                dataObject = response.Content.ReadAsStringAsync().Result;
             }
             else
             {
                 //error
             }
-            return JsonConvert.SerializeObject(dataObject);
+            return dataObject;
         }
         public string getF2Days()
         {
-            ForecastModel dataObject = new ForecastModel();
+            string dataObject = "";
             string urlParameters = string.Concat("forecast?lat=", _latitude, "&lon=", _longtitude, "&units=metric&cnt=16&lang=pl_pl&appid=", _apiKey);
             if (_cityId != null)
                 urlParameters = string.Concat("weather?id=", _cityId, "&lang=pl_pl&units=metric&appid=", _apiKey);
             HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
             if (response.IsSuccessStatusCode)
             {
-                dataObject = response.Content.ReadAsAsync<ForecastModel>().Result;
+
+                dataObject = response.Content.ReadAsStringAsync().Result;
             }
             else
             {
                 //error
             }
-            return JsonConvert.SerializeObject(dataObject);
+            return dataObject;
         }
         public string getF5Days()
         {
-            ForecastModel dataObject = new ForecastModel();
+            string dataObject = "";
             string urlParameters = string.Concat("forecast?lat=", _latitude, "&lon=", _longtitude, "&units=metric&cnt=40&lang=pl_pl&appid=", _apiKey);
             if (_cityId != null)
                 urlParameters = string.Concat("weather?id=", _cityId, "&lang=pl_pl&units=metric&appid=", _apiKey);
             HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
             if (response.IsSuccessStatusCode)
             {
-                dataObject = response.Content.ReadAsAsync<ForecastModel>().Result;
+                dataObject = response.Content.ReadAsStringAsync().Result;
             }
             else
             {
                 //error
             }
-            return JsonConvert.SerializeObject(dataObject);
+            return dataObject;
         }
     }
 }
