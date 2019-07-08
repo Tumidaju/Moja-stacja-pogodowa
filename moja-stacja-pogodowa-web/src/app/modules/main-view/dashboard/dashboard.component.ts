@@ -112,7 +112,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         humidity: data.main.humidity,
         date: {
           day: date.getDate(),
-          month: date.getMonth()
+          month: date.getMonth(),
+          dayOfWeek: date.getDay()
         }
       };
       weatherWidgetArr.push(obj);
@@ -141,7 +142,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         humidity: weather.Day.RainProbability,
         date: {
           day: date.getDate(),
-          month: date.getMonth()
+          month: date.getMonth(),
+          dayOfWeek: date.getDay()
         }
       };
       weatherWidgetArr.push(obj);
@@ -160,7 +162,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     data.data.forEach(weather => {
       const cityName =
         duration !== Duration.oneDay ? data.city_name : weather.city_name;
-      const date = new Date(weather.ob_time);
+      const dayStr: string = weather.ob_time
+        ? weather.ob_time
+        : weather.datetime;
+      const date = new Date(dayStr);
       const obj: WeatherWidget = {
         temp: weather.temp,
         description: weather.weather.description,
@@ -169,7 +174,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         humidity: weather.rh,
         date: {
           day: date.getDate(),
-          month: date.getMonth()
+          month: date.getMonth(),
+          dayOfWeek: date.getDay()
         }
       };
       weatherWidgetArr.push(obj);

@@ -23,6 +23,7 @@ export interface Data {
   temp: number;
   app_temp: number;
   clouds: number;
+  datetime: string;
   weather: WeatherBit;
 }
 export interface WeatherBit {

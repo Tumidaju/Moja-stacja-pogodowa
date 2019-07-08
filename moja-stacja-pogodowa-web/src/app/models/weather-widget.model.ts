@@ -11,4 +11,5 @@ export interface WeatherWidget {
 export interface WeatherDate {
   day: number;
   month: number;
+  dayOfWeek: number;
 }

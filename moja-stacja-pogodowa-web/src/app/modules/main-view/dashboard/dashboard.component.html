@@ -10,9 +10,17 @@
     >
       <mat-tab *ngFor="let widgetDay of widget">
         <ng-template mat-tab-label>
-          <div class="tab-label">
+          <!-- <div class="tab-label">
             <mat-icon class="example-tab-icon">thumb_up</mat-icon>
             First
+          </div> -->
+          <div class="label">
+            <div id="label-temp" class="inf">
+              {{ widgetDay.temp | celsiusSign }}
+            </div>
+            <div id="label-day" class="inf">
+              {{ widgetDay.date.dayOfWeek | dayOfTheWeek }}
+            </div>
           </div>
         </ng-template>
         <div class="widget-container">
