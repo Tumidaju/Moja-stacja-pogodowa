@@ -37,7 +37,7 @@ namespace Moja_stacja_pogodowa.Controllers
             response.Content = new StringContent(model, Encoding.UTF8, "application/json");
             return response;
         }
-        [System.Web.Mvc.HttpPost()]
+        [System.Web.Http.HttpPost()]
         [System.Web.Http.Route("api/Config/SetConfig")]
         public HttpResponseMessage SetConfig([FromBody()] ConfigModel ConfigModel)
         {

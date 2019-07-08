@@ -11,6 +11,7 @@
       color: white;
     }
     mat-tab-group {
+      margin: 15px;
       &::ng-deep .mat-tab-header {
         border-radius: 0 0 10px 10px;
       }

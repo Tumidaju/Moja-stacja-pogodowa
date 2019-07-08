@@ -43,6 +43,7 @@ import { LoadingOverlayModule } from './shared/loading-overlay/loading-overlay.m
 import { LoadingScreenModule } from './shared/loading-screen/loading-screen.module';
 import { WeatherService } from './modules/main-view/settings/services/weather.service';
 import { WidgetService } from './modules/main-view/settings/services/widget.service';
+import { MonthViewPipe } from './shared/month-view/month-view.pipe';
 
 library.add(
   faTimes,

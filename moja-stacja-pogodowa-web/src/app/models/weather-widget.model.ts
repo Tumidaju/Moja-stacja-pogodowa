@@ -4,8 +4,11 @@ export interface WeatherWidget {
   description: string;
   city: string;
   country?: string;
-  date: any;
   wind: any;
   humidity: number;
-
+  date: WeatherDate;
+}
+export interface WeatherDate {
+  day: number;
+  month: number;
 }

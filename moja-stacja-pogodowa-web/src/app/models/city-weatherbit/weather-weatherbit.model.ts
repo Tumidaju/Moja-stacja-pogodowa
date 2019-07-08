@@ -1,5 +1,6 @@
 export interface WeatherWeatherBit {
   count: string;
+  city_name?: string;
   data: Data[];
 }
 export interface Data {
@@ -9,6 +10,7 @@ export interface Data {
   timezone: string;
   lat: number;
   lon: number;
+  ob_time: string;
   station: string;
   vis: number;
   rh: number;
@@ -16,7 +18,8 @@ export interface Data {
   wind_dir: number;
   wind_cdir: string;
   wind_cdir_full: string;
-  wind_speed: number;
+  wind_spd: number;
+  wind_gust_spd: number;
   temp: number;
   app_temp: number;
   clouds: number;
