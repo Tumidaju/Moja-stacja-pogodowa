@@ -78,7 +78,7 @@ namespace Moja_stacja_pogodowa.Repositories
             string dataObject = "";
             if (_locationKey != "")
             {
-                string urlParameters = string.Concat("forecast/hourly/12hour/", _locationKey, "?language=pl-pl&metric=true&details=true&apikey=", _apiKey);
+                string urlParameters = string.Concat("forecasts/v1/hourly/12hour/", _locationKey, "?language=pl-pl&metric=true&details=true&apikey=", _apiKey);
                 HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
                 if (response.IsSuccessStatusCode)
                 {
