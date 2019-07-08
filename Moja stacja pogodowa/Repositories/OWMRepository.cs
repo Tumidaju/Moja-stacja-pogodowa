@@ -41,9 +41,9 @@ namespace Moja_stacja_pogodowa.Repositories
         public string getFToday()
         {
             string dataObject = "";
-            string urlParameters = string.Concat("weather?lat=", _latitude, "&lon=", _longtitude, "&lang=pl_pl&units=metric&appid=", _apiKey);
+            string urlParameters = string.Concat("weather?lat=", _latitude, "&lon=", _longtitude, "&lang=pl&units=metric&appid=", _apiKey);
             if(_cityId!= null)
-                urlParameters = string.Concat("weather?id=", _cityId, "&lang=pl_pl&units=metric&appid=", _apiKey);
+                urlParameters = string.Concat("weather?id=", _cityId, "&lang=pl&units=metric&appid=", _apiKey);
             HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
             if (response.IsSuccessStatusCode)
             {
@@ -58,7 +58,7 @@ namespace Moja_stacja_pogodowa.Repositories
         public string getF2Days()
         {
             string dataObject = "";
-            string urlParameters = string.Concat("forecast?lat=", _latitude, "&lon=", _longtitude, "&units=metric&cnt=16&lang=pl_pl&appid=", _apiKey);
+            string urlParameters = string.Concat("forecast?lat=", _latitude, "&lon=", _longtitude, "&units=metric&cnt=16&lang=pl&appid=", _apiKey);
             if (_cityId != null)
                 urlParameters = string.Concat("weather?id=", _cityId, "&lang=pl_pl&units=metric&appid=", _apiKey);
             HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
@@ -76,7 +76,7 @@ namespace Moja_stacja_pogodowa.Repositories
         public string getF5Days()
         {
             string dataObject = "";
-            string urlParameters = string.Concat("forecast?lat=", _latitude, "&lon=", _longtitude, "&units=metric&cnt=40&lang=pl_pl&appid=", _apiKey);
+            string urlParameters = string.Concat("forecast?lat=", _latitude, "&lon=", _longtitude, "&units=metric&cnt=40&lang=pl&appid=", _apiKey);
             if (_cityId != null)
                 urlParameters = string.Concat("weather?id=", _cityId, "&lang=pl_pl&units=metric&appid=", _apiKey);
             HttpResponseMessage response = _client.GetAsync(urlParameters).Result;

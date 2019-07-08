@@ -5,7 +5,6 @@ using Moja_stacja_pogodowa.Models.Config;
 using Moja_stacja_pogodowa.Models.Weather;
 using Moja_stacja_pogodowa.Models.Widget;
 using Moja_stacja_pogodowa.Repositories;
-using Moja_stacja_pogodowa.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;

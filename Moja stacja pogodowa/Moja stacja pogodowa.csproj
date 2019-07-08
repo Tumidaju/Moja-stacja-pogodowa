@@ -320,7 +320,6 @@
     <Compile Include="Interfaces\IConfigRepository.cs" />
     <Compile Include="Interfaces\IWeatherRepository.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
-    <Compile Include="Services\IAPIService.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,6 @@ using Moja_stacja_pogodowa.Models.API;
 using Moja_stacja_pogodowa.Models.Config;
 using Moja_stacja_pogodowa.Models.Weather;
 using Moja_stacja_pogodowa.Repositories;
-using Moja_stacja_pogodowa.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -20,7 +19,6 @@ namespace Moja_stacja_pogodowa.Controllers
     public class ConfigController : ApiController
     {
         private IConfigRepository _ConfigRepository;
-        private IAPIService _APIService;
         private IAPIRepository _IAPIRepository;
 
         public ConfigController(IConfigRepository ConfigRepository,IAPIRepository IAPIRepository)

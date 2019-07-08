@@ -8,7 +8,6 @@ using Microsoft.Owin.Security.OAuth;
 using Moja_stacja_pogodowa.Interfaces;
 using Moja_stacja_pogodowa.IoC;
 using Moja_stacja_pogodowa.Repositories;
-using Moja_stacja_pogodowa.Services;
 using Newtonsoft.Json.Serialization;
 using Unity;
 using Unity.Lifetime;
