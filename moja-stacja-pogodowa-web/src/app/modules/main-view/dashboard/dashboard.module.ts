@@ -1,3 +1,4 @@
+import { CelsiusSignModule } from './../../../shared/celsius-sign/celsius-sign.module';
 import { SmallWeatherWidgetModule } from './small-weather-widget/small-weather-widget.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -9,6 +10,7 @@ import {
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard.routing';
 import { LargeWeatherWidgetModule } from './large-weather-widget/large-weather-widget.module';
+import { DayOfTheWeekModule } from 'src/app/shared/day-of-the-week/day-of-the-week.module';
 
 @NgModule({
   imports: [
@@ -18,7 +20,9 @@ import { LargeWeatherWidgetModule } from './large-weather-widget/large-weather-w
     SmallWeatherWidgetModule,
     LargeWeatherWidgetModule,
     MatTabsModule,
-    MatIconModule
+    MatIconModule,
+    CelsiusSignModule,
+    DayOfTheWeekModule
   ],
   declarations: [DashboardComponent],
   exports: [DashboardComponent]

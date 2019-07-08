@@ -11,6 +11,6 @@ export class SmallWeatherWidgetComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    console.log('123', this.widget);
+    // console.log('123', this.widget);
   }
 }

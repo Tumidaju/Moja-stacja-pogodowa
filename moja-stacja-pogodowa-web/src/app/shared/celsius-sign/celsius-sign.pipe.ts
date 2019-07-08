@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class CelsiusSignPipe implements PipeTransform {
   celsiusSign = '°C';
   transform(value: any): any {
-    const transformedValue = value + this.celsiusSign;
+    const transformedValue = value.toFixed(1) + this.celsiusSign;
     return transformedValue;
   }
 }

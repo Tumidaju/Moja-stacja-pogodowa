@@ -1,5 +1,9 @@
 <div id="container">
-  <p-progressBar mode="indeterminate" *ngIf="loading" [style]="{'height': '6px'}"></p-progressBar>
+  <p-progressBar
+    mode="indeterminate"
+    *ngIf="loading"
+    [style]="{ height: '6px' }"
+  ></p-progressBar>
   <form #log="ngForm" (ngSubmit)="onSubmit(log)" [formGroup]="logForm">
     <div id="header">
       <span> Zaloguj się</span>
@@ -36,7 +40,7 @@
       </mat-form-field>
 
       <div class="btnBox">
-        <button class="white" mat-raised-button color="accent" type="submit">
+        <button class="white" mat-raised-button color="primary" type="submit">
           Logowanie
         </button>
         <button

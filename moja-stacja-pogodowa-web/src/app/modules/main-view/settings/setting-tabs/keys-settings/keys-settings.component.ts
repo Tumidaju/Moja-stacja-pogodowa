@@ -48,9 +48,12 @@ export class KeysSettingsComponent implements OnInit {
   onSubmit(): void {
     if (!this.apiKeysForm.valid) {
     } else {
+      const values = this.apiKeysForm.value;
       const apiWeatherKeys: WeatherApiKeys = {
-        ...this.apiKeysForm.value,
-        userId: this.weatherApiKeys.UserId
+        OWMKey: values.apiKeys.OWMKey,
+        AWKey: values.apiKeys.AWKey,
+        WBKey: values.apiKeys.WBKey,
+        UserId: this.weatherApiKeys.UserId
       };
       this.updateWeatherApiKeys.emit(apiWeatherKeys);
     }
