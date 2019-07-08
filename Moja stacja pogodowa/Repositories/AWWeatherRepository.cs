@@ -52,14 +52,15 @@ namespace Moja_stacja_pogodowa.Repositories
         }
         public string getFToday()
         {
-            ForecastModel dataObject = new ForecastModel();
+            string dataObject = "";
             if (_locationKey!="")
             {
-                string urlParameters = string.Concat("forecasts/v1/daily/1day/", _locationKey, "?language=pl-pl&metric=true&details=true&apikey=", _apiKey);
+                string urlParameters = string.Concat("currentconditions/v1/", _locationKey, "?language=pl-pl&metric=true&details=true&apikey=", _apiKey);
                 HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    dataObject = response.Content.ReadAsAsync<ForecastModel>().Result;
+                    dataObject = response.Content.ReadAsStringAsync().Result;
+                    // dataObject = response.Content.ReadAsAsync<ForecastModel>().Result;
                 }
                 else
                 {
@@ -70,18 +71,18 @@ namespace Moja_stacja_pogodowa.Repositories
             {
                 //error - zla lokalizacja
             }
-            return JsonConvert.SerializeObject(dataObject);
+            return dataObject;
         }
         public string getF2Days()
         {
-            ForecastModel dataObject = new ForecastModel();
+            string dataObject = "";
             if (_locationKey != "")
             {
-                string urlParameters = string.Concat("forecast/hourly/", _locationKey, "?language=pl-pl&metric=true&details=true&apikey=", _apiKey);
+                string urlParameters = string.Concat("forecast/hourly/12hour/", _locationKey, "?language=pl-pl&metric=true&details=true&apikey=", _apiKey);
                 HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    dataObject = response.Content.ReadAsAsync<ForecastModel>().Result;
+                    dataObject = response.Content.ReadAsStringAsync().Result;
                 }
                 else
                 {
@@ -92,18 +93,18 @@ namespace Moja_stacja_pogodowa.Repositories
             {
                 //error - zla lokalizacja
             }
-            return JsonConvert.SerializeObject(dataObject);
+            return dataObject;
         }
         public string getF5Days()
         {
-            ForecastModel dataObject = new ForecastModel();
+            string dataObject = "";
             if (_locationKey != "")
             {
                 string urlParameters = string.Concat("forecasts/v1/daily/5day/", _locationKey, "?language=pl-pl&metric=true&details=true&apikey=", _apiKey);
                 HttpResponseMessage response = _client.GetAsync(urlParameters).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    dataObject = response.Content.ReadAsAsync<ForecastModel>().Result;
+                    dataObject = response.Content.ReadAsStringAsync().Result;
                 }
                 else
                 {
@@ -114,7 +115,7 @@ namespace Moja_stacja_pogodowa.Repositories
             {
                 //error - zla lokalizacja
             }
-            return JsonConvert.SerializeObject(dataObject);
+            return dataObject;
         }
     }
 }
