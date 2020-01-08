@@ -491,6 +491,7 @@
     <Content Include="Repositories\CityLists\OWM_cities.json" />
     <Content Include="Repositories\CityLists\WB_cities.json" />
     <Content Include="Repositories\CityLists\AW_cities.json" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -521,6 +522,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Logs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
